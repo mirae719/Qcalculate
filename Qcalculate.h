@@ -11,6 +11,18 @@ public:
     Qcalculate(QWidget *parent = nullptr);
     ~Qcalculate();
 
+public slots:
+    void on_btnZero_clicked();
+    void on_btnOne_clicked();
+    void on_btnTwo_clicked();
+    void on_btnThree_clicked();
+    void on_btnFour_clicked();
+    void on_btnFive_clicked();
+    void on_btnSix_clicked();
+    void on_btnSeven_clicked();
+    void on_btnAte_clicked();
+    void on_btnNineClicked();
+
 private:
     Ui::QcalculateClass ui;
 };
