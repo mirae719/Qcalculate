@@ -30,9 +30,9 @@ Qcalculate::~Qcalculate()
 // 연산자 계산
 // const QString& 으로 매개변수로 받는 것과, QString* 으로 받는 것의 차이. 
 
-int nResult;
+double nResult;
 
-int* Qcalculate::calculated( const QString& sInputText )
+double* Qcalculate::calculated( const QString& sInputText )
 {
     // 스택변수 -> 자기 라이프 사이클이 끝나면 사라짐
     
@@ -43,8 +43,8 @@ int* Qcalculate::calculated( const QString& sInputText )
         
         if( lstInput.size() == 2 )
         {
-            int nInputFront = lstInput.at( 0 ).toInt();
-            int nInputBack = lstInput.at( 1 ).toInt();
+            double nInputFront = lstInput.at( 0 ).toDouble();
+            double nInputBack = lstInput.at( 1 ).toDouble();
 
             nResult = nInputFront + nInputBack;
 
@@ -57,8 +57,8 @@ int* Qcalculate::calculated( const QString& sInputText )
 
         if (lstInput.size() == 2)
         {
-            int nInputFront = lstInput.at( 0 ).toInt();
-            int nInputBack = lstInput.at( 1 ).toInt();
+            double nInputFront = lstInput.at( 0 ).toDouble();
+            double nInputBack = lstInput.at( 1 ).toDouble();
 
             nResult = nInputFront - nInputBack;
 
@@ -71,8 +71,8 @@ int* Qcalculate::calculated( const QString& sInputText )
 
         if (lstInput.size() == 2)
         {
-            int nInputFront = lstInput.at( 0 ).toInt();
-            int nInputBack = lstInput.at( 1 ).toInt();
+            double nInputFront = lstInput.at( 0 ).toDouble();
+            double nInputBack = lstInput.at( 1 ).toDouble();
 
             nResult = nInputFront * nInputBack;
 
@@ -85,16 +85,9 @@ int* Qcalculate::calculated( const QString& sInputText )
 
         if( lstInput.size() == 2 )
         {
-            int nInputFront = lstInput.at( 0 ).toInt();
-            int nInputBack = lstInput.at( 1 ).toInt();
+            double nInputFront = lstInput.at( 0 ).toDouble();
+            double nInputBack = lstInput.at( 1 ).toDouble();
 
-            if ( nInputFront % nInputBack == 0 )
-            {
-                nResult = nInputFront / nInputBack;
-                return &nResult;
-            }
-
-            // 소수로 반환을 해야하는데..
             nResult = nInputFront / nInputBack;
             return &nResult;
         }
@@ -239,7 +232,7 @@ void Qcalculate::on_btnEqual_clicked()
 {
     QString sEdtInput = ui.edtInput->text();
 
-    int* nResult = calculated( sEdtInput );
+    double* nResult = calculated( sEdtInput );
 
     // 포인터 -> 값이 들어가기도 하고, 주소가 들어가기도 함
 
