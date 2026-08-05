@@ -31,6 +31,7 @@ public slots:
     void on_btnMinus_clicked();
 	void on_btnEqual_clicked();
     void on_btnClear_clicked();
+    void on_btnErase_clicked();
     
 
 private:

@@ -274,7 +274,18 @@ void Qcalculate::on_btnEqual_clicked()
 void Qcalculate::on_btnClear_clicked()
 {
     ui.edtInput->clear();
-    ui.edtCaluated->clear();
+    ui.edtCaluated->setText( QString::number( 0 ) );
+}
+
+void Qcalculate::on_btnErase_clicked()
+{
+    QString sInputText = ui.edtInput->text();
+
+    if (sInputText.isEmpty() == false)
+    {
+        sInputText.chop( 1 );
+        ui.edtInput->setText( sInputText );
+    }
 }
 
 
