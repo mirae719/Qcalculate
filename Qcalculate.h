@@ -24,6 +24,7 @@ public slots:
     void on_btnSeven_clicked();
     void on_btnAte_clicked();
     void on_btnNine_clicked();
+    void on_btnMulti_clicked();
     
 	void on_btnAdd_clicked();
     void on_btnMinus_clicked();
