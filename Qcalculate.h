@@ -37,7 +37,7 @@ public slots:
     void on_btnSign_clicked();
     void on_btnDivideX_clicked();
     void on_btnRoot_clicked();
-    
+    void on_btnPersent_clicked();
 
 private:
     Ui::QcalculateClass ui;

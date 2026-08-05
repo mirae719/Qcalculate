@@ -375,7 +375,75 @@ void Qcalculate::on_btnRoot_clicked()
 
 	ui.edtInput->setText( ( "sqrt(" + sCurrentText + ")" ) );
     ui.edtCaluated->setText( QString::number( sqrt( sCurrentText.toDouble() ) ) );
+}
 
+void Qcalculate::on_btnPersent_clicked()
+{
+    QString sCurrentText = ui.edtInput->text();
+    double dFirst;
+    double dSecond;
+    double dResult;
+    
+    if( sCurrentText.contains( "+" ) == true )
+    {
+
+        QStringList sLstText = sCurrentText.split( "+" );
+
+        if( sLstText.size() == 2 )
+        {
+            dFirst = sLstText.at( 0 ).toDouble();
+            dSecond = sLstText.at( 1 ).toDouble();
+
+            dResult = dFirst / dSecond;
+        }
+
+        ui.edtInput->setText( QString::number( dFirst ) + "+" + QString::number( dResult ) );
+        ui.edtCaluated->setText( QString::number( dResult ) );
+    }
+    else if( sCurrentText.contains( "-" ) == true )
+    {
+        QStringList sLstText = sCurrentText.split( "-" );
+        
+        if ( sLstText.size() == 2)
+        {
+            dFirst = sLstText.at( 0 ).toDouble();
+            dSecond = sLstText.at( 1 ).toDouble();
+
+            dResult = dFirst / dSecond;
+        }
+
+        ui.edtInput->setText( QString::number( dFirst ) + "-" + QString::number( dResult ) );
+        ui.edtCaluated->setText( QString::number( dResult ) );
+    }
+    else if ( sCurrentText.contains( "*" ) == true )
+    {
+        QStringList sLstText = sCurrentText.split( "*" );
+
+        if (sLstText.size() == 2)
+        {
+            dFirst = sLstText.at( 0 ).toDouble();
+            dSecond = sLstText.at( 1 ).toDouble();
+
+            dResult = dFirst / dSecond;
+        }
+
+        ui.edtInput->setText( QString::number( dFirst ) + "*" + QString::number( dResult ) );
+        ui.edtCaluated->setText( QString::number( dResult ) );
+    }
+    else
+    {
+        QStringList sLstText = sCurrentText.split( "/" );
+
+        if (sLstText.size() == 2)
+        {
+            dFirst = sLstText.at( 0 ).toDouble();
+            dSecond = sLstText.at( 1 ).toDouble();
+
+            dResult = dFirst / dSecond;
+        }
+        ui.edtInput->setText( QString::number( dFirst ) + "/" + QString::number( dResult ) );
+        ui.edtCaluated->setText( QString::number( dResult ) );
+    }
 
 }
 
