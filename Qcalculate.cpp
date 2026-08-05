@@ -180,7 +180,10 @@ void Qcalculate::on_btnMulti_clicked()
     QString sCurrentText = ui.edtInput->text();
     QString sInputText = ui.btnMulti->text();
 
-    if( sCurrentText.endsWith( "*" ) )
+    if( sCurrentText.endsWith( "+" ) == true ||
+        sCurrentText.endsWith( "-" ) == true ||
+        sCurrentText.endsWith( "*" ) == true ||
+        sCurrentText.endsWith( "/" ) == true )
     {
         return;
     }
@@ -190,8 +193,16 @@ void Qcalculate::on_btnMulti_clicked()
 
 void Qcalculate::on_btnDivide_clicked()
 {
-    QString sInputText = ui.btnDivide->text();
     QString sCurrentText = ui.edtInput->text();
+    QString sInputText = ui.btnDivide->text();
+
+    if( sCurrentText.endsWith( "+" ) == true ||
+        sCurrentText.endsWith( "-" ) == true ||
+        sCurrentText.endsWith( "*" ) == true ||
+        sCurrentText.endsWith( "/" ) == true )
+    {
+        return;
+    }
 
     ui.edtInput->setText( sCurrentText + sInputText );
 }
@@ -200,7 +211,10 @@ void Qcalculate::on_btnAdd_clicked()
 {
     QString sCurrentText = ui.edtInput->text();
 
-    if ( sCurrentText.endsWith("+") )
+    if( sCurrentText.endsWith( "+" ) == true ||
+        sCurrentText.endsWith( "-" ) == true ||
+        sCurrentText.endsWith( "*" ) == true ||
+        sCurrentText.endsWith( "/" ) == true )
     {
         return;
     }
@@ -217,13 +231,16 @@ void Qcalculate::on_btnAdd_clicked()
 
 void Qcalculate::on_btnMinus_clicked()
 {
-    if( ui.edtInput->text().endsWith("-") )
+    QString sCurrentText = ui.edtInput->text();
+    QString sInputText = ui.btnMinus->text();
+
+    if( sCurrentText.endsWith( "+" ) == true ||
+        sCurrentText.endsWith( "-" ) == true ||
+        sCurrentText.endsWith( "*" ) == true ||
+        sCurrentText.endsWith( "/" ) == true )
     {
         return;
     }
-
-    QString sCurrentText = ui.edtInput->text();
-    QString sInputText = ui.btnMinus->text();
 
     ui.edtInput->setText( sCurrentText + sInputText );
 }
@@ -231,6 +248,14 @@ void Qcalculate::on_btnMinus_clicked()
 void Qcalculate::on_btnEqual_clicked()
 {
     QString sEdtInput = ui.edtInput->text();
+
+    if( sEdtInput.endsWith( "+" ) == true ||
+        sEdtInput.endsWith( "-" ) == true ||
+        sEdtInput.endsWith( "*" ) == true ||
+        sEdtInput.endsWith( "/" ) == true )
+    {
+        return;
+    }
 
     double* nResult = calculated( sEdtInput );
 
