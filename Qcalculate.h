@@ -11,7 +11,7 @@ public:
     Qcalculate(QWidget *parent = nullptr);
     ~Qcalculate();
 
-    int* calculated(QString* sInputText);
+    int* calculated( const QString& sInputText );
 
 public slots:
     void on_btnZero_clicked();
@@ -25,6 +25,7 @@ public slots:
     void on_btnAte_clicked();
     void on_btnNine_clicked();
     void on_btnMulti_clicked();
+    void on_btnDivide_clicked();
     
 	void on_btnAdd_clicked();
     void on_btnMinus_clicked();

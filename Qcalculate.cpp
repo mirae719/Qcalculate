@@ -28,48 +28,74 @@ Qcalculate::~Qcalculate()
 }
 
 // 연산자 계산
-int* Qcalculate::calculated(QString* sInputText)
+// const QString& 으로 매개변수로 받는 것과, QString* 으로 받는 것의 차이. 
+
+int nResult;
+
+int* Qcalculate::calculated( const QString& sInputText )
 {
-    if( sInputText->contains( "+" ) )
+    // 스택변수 -> 자기 라이프 사이클이 끝나면 사라짐
+    
+    if( sInputText.contains( "+" ) == true )
     {
 
-        QStringList lstInput = sInputText->split( "+" );
+        QStringList lstInput = sInputText.split( "+" );
         
-        if (lstInput.size() == 2)
+        if( lstInput.size() == 2 )
         {
             int nInputFront = lstInput.at( 0 ).toInt();
             int nInputBack = lstInput.at( 1 ).toInt();
 
-            int nResult = nInputFront + nInputBack;
+            nResult = nInputFront + nInputBack;
 
             return &nResult;
         }
     }
-    else if( sInputText->contains("-") )
+    else if( sInputText.contains("-") )
 	{
-        QStringList lstInput = sInputText->split( "-" );
+        QStringList lstInput = sInputText.split( "-" );
 
         if (lstInput.size() == 2)
         {
             int nInputFront = lstInput.at( 0 ).toInt();
             int nInputBack = lstInput.at( 1 ).toInt();
 
-            int nResult = nInputFront - nInputBack;
+            nResult = nInputFront - nInputBack;
 
             return &nResult;
         }
 	}
-    else if( sInputText->contains( "*" ) )
+    else if( sInputText.contains( "*" ) )
     {
-        QStringList lstInput = sInputText->split( "*" );
+        QStringList lstInput = sInputText.split( "*" );
 
         if (lstInput.size() == 2)
         {
             int nInputFront = lstInput.at( 0 ).toInt();
             int nInputBack = lstInput.at( 1 ).toInt();
 
-            int nResult = nInputFront * nInputBack;
+            nResult = nInputFront * nInputBack;
 
+            return &nResult;
+        }
+    }
+    else
+    {
+        QStringList lstInput = sInputText.split( "/" );
+
+        if( lstInput.size() == 2 )
+        {
+            int nInputFront = lstInput.at( 0 ).toInt();
+            int nInputBack = lstInput.at( 1 ).toInt();
+
+            if ( nInputFront % nInputBack == 0 )
+            {
+                nResult = nInputFront / nInputBack;
+                return &nResult;
+            }
+
+            // 소수로 반환을 해야하는데..
+            nResult = nInputFront / nInputBack;
             return &nResult;
         }
     }
@@ -169,6 +195,14 @@ void Qcalculate::on_btnMulti_clicked()
     ui.edtInput->setText(sCurrentText + sInputText);
 }
 
+void Qcalculate::on_btnDivide_clicked()
+{
+    QString sInputText = ui.btnDivide->text();
+    QString sCurrentText = ui.edtInput->text();
+
+    ui.edtInput->setText( sCurrentText + sInputText );
+}
+
 void Qcalculate::on_btnAdd_clicked()
 {
     QString sCurrentText = ui.edtInput->text();
@@ -178,7 +212,7 @@ void Qcalculate::on_btnAdd_clicked()
         return;
     }
 
-    if ( !sCurrentText.isEmpty() && !sCurrentText.endsWith(" ") )
+    if( sCurrentText.isEmpty() == false && sCurrentText.endsWith( " " ) == false )
     {
         ui.edtInput->setText( sCurrentText + " " );
     }
@@ -205,7 +239,9 @@ void Qcalculate::on_btnEqual_clicked()
 {
     QString sEdtInput = ui.edtInput->text();
 
-    int* nResult = calculated( &sEdtInput );
+    int* nResult = calculated( sEdtInput );
+
+    // 포인터 -> 값이 들어가기도 하고, 주소가 들어가기도 함
 
 	ui.edtInput->setText( QString::number( *nResult ) );
     ui.edtCaluated->setText( QString::number( *nResult ) );
