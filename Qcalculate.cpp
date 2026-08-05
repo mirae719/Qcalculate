@@ -369,6 +369,18 @@ void Qcalculate::on_btnDivideX_clicked()
     ui.edtCaluated->setText( QString::number( 1 / sCurrentText.toDouble() ) );
 }
 
+void Qcalculate::on_btnRoot_clicked()
+{
+    QString sCurrentText = ui.edtInput->text();
+
+	ui.edtInput->setText( ( "sqrt(" + sCurrentText + ")" ) );
+    ui.edtCaluated->setText( QString::number( sqrt( sCurrentText.toDouble() ) ) );
+
+
+}
+
+
+
 
 
 
