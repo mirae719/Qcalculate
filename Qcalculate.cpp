@@ -1,5 +1,6 @@
 #include "Qcalculate.h"
-#include "QRegularExpression"
+#include "QMessageBox"
+#include "QSystemTrayIcon"
 
 
 Qcalculate::Qcalculate(QWidget *parent)
@@ -26,20 +27,38 @@ Qcalculate::~Qcalculate()
 {
 }
 
-int Qcalculate::calculated(QString& sInputText)
+// 연산자 계산
+int* Qcalculate::calculated(QString* sInputText)
 {
-    if (sInputText.contains("+") )
+    if( sInputText->contains( "+" ) )
     {
-        QStringList lstInput = sInputText.split( "+" );
+
+        QStringList lstInput = sInputText->split( "+" );
         
         if (lstInput.size() == 2)
         {
-            int sInputFront = lstInput[ 0 ].toInt();
-            int sInputBack = lstInput[ 1 ].toInt();
+            int sInputFront = lstInput.at( 0 ).toInt();
+            int sInputBack = lstInput.at( 1 ).toInt();
 
-            return sInputFront + sInputBack;
+            int sResult = sInputFront + sInputBack;
+
+            return &sResult;
         }
     }
+    else if( sInputText->contains("-") )
+	{
+        QStringList lstInput = sInputText->split( "-" );
+
+        if (lstInput.size() == 2)
+        {
+            int sInputFront = lstInput.at( 0 ).toInt();
+            int sInputBack = lstInput.at( 1 ).toInt();
+
+            int sResult = sInputFront - sInputBack;
+
+            return &sResult;
+        }
+	}
 }
 
 void Qcalculate::on_btnZero_clicked()
@@ -126,8 +145,33 @@ void Qcalculate::on_btnNine_clicked()
 void Qcalculate::on_btnAdd_clicked()
 {
     QString sCurrentText = ui.edtInput->text();
+
+    if ( sCurrentText.endsWith("+") )
+    {
+        return;
+    }
+
+    if ( !sCurrentText.isEmpty() && !sCurrentText.endsWith(" ") )
+    {
+        ui.edtInput->setText( sCurrentText + " " );
+    }
+
     QString sInputText = ui.btnAdd->text();
 
+    ui.edtInput->setText( sCurrentText + sInputText );
+}
+
+void Qcalculate::on_btnMinus_clicked()
+{
+    if( ui.edtInput->text().endsWith("-") )
+    {
+        return;
+    }
+
+    QString sCurrentText = ui.edtInput->text();
+    QString sInputText = ui.btnMinus->text();
+
+    
     ui.edtInput->setText( sCurrentText + sInputText );
 }
 
@@ -135,9 +179,9 @@ void Qcalculate::on_btnEqual_clicked()
 {
     QString sEdtInput = ui.edtInput->text();
 
-    int nResult = calculated( sEdtInput );
-
-    ui.edtCaluated->setText( QString::number( nResult ) );
+    int* nResult = calculated( &sEdtInput );
+	
+    ui.edtCaluated->setText( QString::number( *nResult ) );
 }
 
 
