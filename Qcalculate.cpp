@@ -288,6 +288,24 @@ void Qcalculate::on_btnErase_clicked()
     }
 }
 
+void Qcalculate::on_btnDot_clicked()
+{
+    QString sCurrentText = ui.edtInput->text();
+    QString sInputText = ui.btnDot->text();
+
+    if ( sCurrentText.isEmpty() == true )
+    {
+        return;
+    }
+
+    if ( sCurrentText.contains( "." ) == true )
+    {
+        return;
+    }
+
+    ui.edtInput->setText( sCurrentText + sInputText );
+}
+
 
 
 
