@@ -349,6 +349,18 @@ void Qcalculate::on_btnSquare_clicked()
 
 void Qcalculate::on_btnSign_clicked()
 {
+    double sCurrentText = ui.edtInput->text().toDouble();
+    
+    if (sCurrentText < 0)
+    {
+        ui.edtCaluated->setText( QString::number( abs( sCurrentText ) ) );
+        ui.edtInput->setText( QString::number( abs( sCurrentText ) ) );
+    }
+    else
+    {
+		ui.edtCaluated->setText( QString::number( sCurrentText * -1 ) );
+        ui.edtInput->setText( QString::number( sCurrentText * -1 ) );
+    }
 
 }
 
