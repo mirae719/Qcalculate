@@ -248,14 +248,19 @@ void Qcalculate::on_btnMinus_clicked()
 void Qcalculate::on_btnEqual_clicked()
 {
     QString sEdtInput = ui.edtInput->text();
-
-    if( sEdtInput.endsWith( "+" ) == true ||
-        sEdtInput.endsWith( "-" ) == true ||
-        sEdtInput.endsWith( "*" ) == true ||
-        sEdtInput.endsWith( "/" ) == true )
+    /*
+    if( sEdtInput.endsWith( "+" ) == false ||
+        sEdtInput.endsWith( "-" ) == false ||
+        sEdtInput.endsWith( "*" ) == false ||
+        sEdtInput.endsWith( "/" ) == false ||
+        sEdtInput.contains( "+" ) == true ||
+        sEdtInput.contains( "-" ) == true ||
+        sEdtInput.contains( "*" ) == true ||
+        sEdtInput.contains( "/" ) == true )
     {
         return;
     }
+	*/
 
     double* nResult = calculated( sEdtInput );
 
@@ -264,6 +269,12 @@ void Qcalculate::on_btnEqual_clicked()
 	ui.edtInput->setText( QString::number( *nResult ) );
     ui.edtCaluated->setText( QString::number( *nResult ) );
     
+}
+
+void Qcalculate::on_btnClear_clicked()
+{
+    ui.edtInput->clear();
+    ui.edtCaluated->clear();
 }
 
 
