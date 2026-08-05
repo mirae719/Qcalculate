@@ -30,7 +30,7 @@ Qcalculate::~Qcalculate()
 // 연산자 계산
 // const QString& 으로 매개변수로 받는 것과, QString* 으로 받는 것의 차이. 
 
-double nResult;
+double dResult;
 
 double* Qcalculate::calculated( const QString& sInputText )
 {
@@ -43,12 +43,12 @@ double* Qcalculate::calculated( const QString& sInputText )
         
         if( lstInput.size() == 2 )
         {
-            double nInputFront = lstInput.at( 0 ).toDouble();
-            double nInputBack = lstInput.at( 1 ).toDouble();
+            double dInputFront = lstInput.at( 0 ).toDouble();
+            double dInputBack = lstInput.at( 1 ).toDouble();
 
-            nResult = nInputFront + nInputBack;
+            dResult = dInputFront + dInputBack;
 
-            return &nResult;
+            return &dResult;
         }
     }
     else if( sInputText.contains("-") )
@@ -57,12 +57,12 @@ double* Qcalculate::calculated( const QString& sInputText )
 
         if (lstInput.size() == 2)
         {
-            double nInputFront = lstInput.at( 0 ).toDouble();
-            double nInputBack = lstInput.at( 1 ).toDouble();
+            double dInputFront = lstInput.at( 0 ).toDouble();
+            double dInputBack = lstInput.at( 1 ).toDouble();
 
-            nResult = nInputFront - nInputBack;
+            dResult = dInputFront - dInputBack;
 
-            return &nResult;
+            return &dResult;
         }
 	}
     else if( sInputText.contains( "*" ) )
@@ -71,12 +71,12 @@ double* Qcalculate::calculated( const QString& sInputText )
 
         if (lstInput.size() == 2)
         {
-            double nInputFront = lstInput.at( 0 ).toDouble();
-            double nInputBack = lstInput.at( 1 ).toDouble();
+            double dInputFront = lstInput.at( 0 ).toDouble();
+            double dInputBack = lstInput.at( 1 ).toDouble();
 
-            nResult = nInputFront * nInputBack;
+            dResult = dInputFront * dInputBack;
 
-            return &nResult;
+            return &dResult;
         }
     }
     else
@@ -85,11 +85,11 @@ double* Qcalculate::calculated( const QString& sInputText )
 
         if( lstInput.size() == 2 )
         {
-            double nInputFront = lstInput.at( 0 ).toDouble();
-            double nInputBack = lstInput.at( 1 ).toDouble();
+            double dInputFront = lstInput.at( 0 ).toDouble();
+            double dInputBack = lstInput.at( 1 ).toDouble();
 
-            nResult = nInputFront / nInputBack;
-            return &nResult;
+            dResult = dInputFront / dInputBack;
+            return &dResult;
         }
     }
 }
@@ -205,8 +205,6 @@ void Qcalculate::on_btnDivide_clicked()
     {
         return;
     }
-
-    
 
     if( sCurrentText.endsWith( "+" ) == true ||
         sCurrentText.endsWith( "-" ) == true ||
@@ -351,7 +349,7 @@ void Qcalculate::on_btnSign_clicked()
 {
     double sCurrentText = ui.edtInput->text().toDouble();
     
-    if (sCurrentText < 0)
+    if ( sCurrentText < 0 )
     {
         ui.edtCaluated->setText( QString::number( abs( sCurrentText ) ) );
         ui.edtInput->setText( QString::number( abs( sCurrentText ) ) );
@@ -361,8 +359,17 @@ void Qcalculate::on_btnSign_clicked()
 		ui.edtCaluated->setText( QString::number( sCurrentText * -1 ) );
         ui.edtInput->setText( QString::number( sCurrentText * -1 ) );
     }
-
 }
+
+void Qcalculate::on_btnDivideX_clicked()
+{
+    QString sCurrentText = ui.edtInput->text();
+
+    ui.edtInput->setText( ( "1/"  "(" + sCurrentText + ")" ) );
+    ui.edtCaluated->setText( QString::number( 1 / sCurrentText.toDouble() ) );
+}
+
+
 
 
 

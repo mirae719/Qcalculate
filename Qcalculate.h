@@ -35,6 +35,7 @@ public slots:
     void on_btnDot_clicked();
     void on_btnSquare_clicked();
     void on_btnSign_clicked();
+    void on_btnDivideX_clicked();
     
 
 private:
