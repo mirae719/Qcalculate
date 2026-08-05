@@ -33,6 +33,8 @@ public slots:
     void on_btnClear_clicked();
     void on_btnErase_clicked();
     void on_btnDot_clicked();
+    void on_btnSquare_clicked();
+    void on_btnSign_clicked();
     
 
 private:

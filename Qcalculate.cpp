@@ -178,7 +178,11 @@ void Qcalculate::on_btnNine_clicked()
 void Qcalculate::on_btnMulti_clicked()
 {
     QString sCurrentText = ui.edtInput->text();
-    QString sInputText = ui.btnMulti->text();
+
+    if( sCurrentText.isEmpty() == true )
+    {
+        return;
+    }
 
     if( sCurrentText.endsWith( "+" ) == true ||
         sCurrentText.endsWith( "-" ) == true ||
@@ -187,6 +191,8 @@ void Qcalculate::on_btnMulti_clicked()
     {
         return;
     }
+
+    QString sInputText = ui.btnMulti->text();
 
     ui.edtInput->setText(sCurrentText + sInputText);
 }
@@ -194,7 +200,13 @@ void Qcalculate::on_btnMulti_clicked()
 void Qcalculate::on_btnDivide_clicked()
 {
     QString sCurrentText = ui.edtInput->text();
-    QString sInputText = ui.btnDivide->text();
+
+    if( sCurrentText.isEmpty() == true )
+    {
+        return;
+    }
+
+    
 
     if( sCurrentText.endsWith( "+" ) == true ||
         sCurrentText.endsWith( "-" ) == true ||
@@ -204,12 +216,18 @@ void Qcalculate::on_btnDivide_clicked()
         return;
     }
 
+	QString sInputText = ui.btnDivide->text();
     ui.edtInput->setText( sCurrentText + sInputText );
 }
 
 void Qcalculate::on_btnAdd_clicked()
 {
     QString sCurrentText = ui.edtInput->text();
+
+    if ( sCurrentText.isEmpty() == true)
+    {
+        return;
+    }
 
     if( sCurrentText.endsWith( "+" ) == true ||
         sCurrentText.endsWith( "-" ) == true ||
@@ -232,7 +250,12 @@ void Qcalculate::on_btnAdd_clicked()
 void Qcalculate::on_btnMinus_clicked()
 {
     QString sCurrentText = ui.edtInput->text();
-    QString sInputText = ui.btnMinus->text();
+
+    if( sCurrentText.isEmpty() == true )
+    {
+        return;
+    }
+    
 
     if( sCurrentText.endsWith( "+" ) == true ||
         sCurrentText.endsWith( "-" ) == true ||
@@ -242,12 +265,14 @@ void Qcalculate::on_btnMinus_clicked()
         return;
     }
 
+    QString sInputText = ui.btnMinus->text();
+
     ui.edtInput->setText( sCurrentText + sInputText );
 }
 
 void Qcalculate::on_btnEqual_clicked()
 {
-    QString sEdtInput = ui.edtInput->text();
+    QString sCurrentText = ui.edtInput->text();
     /*
     if( sEdtInput.endsWith( "+" ) == false ||
         sEdtInput.endsWith( "-" ) == false ||
@@ -261,8 +286,12 @@ void Qcalculate::on_btnEqual_clicked()
         return;
     }
 	*/
+    if( sCurrentText.isEmpty() == true )
+    {
+        return;
+    }
 
-    double* nResult = calculated( sEdtInput );
+    double* nResult = calculated( sCurrentText );
 
     // 포인터 -> 값이 들어가기도 하고, 주소가 들어가기도 함
 
@@ -304,6 +333,23 @@ void Qcalculate::on_btnDot_clicked()
     }
 
     ui.edtInput->setText( sCurrentText + sInputText );
+}
+
+void Qcalculate::on_btnSquare_clicked()
+{
+    QString sCurrentText = ui.edtInput->text();
+
+    double dCurrent = sCurrentText.toDouble();
+
+    double dResult = pow( dCurrent, 2 );
+
+    ui.edtInput->setText( ( "sqr(" + sCurrentText + ")" ) );
+    ui.edtCaluated->setText( QString::number( dResult ) );
+}
+
+void Qcalculate::on_btnSign_clicked()
+{
+
 }
 
 
