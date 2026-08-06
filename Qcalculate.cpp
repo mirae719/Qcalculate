@@ -484,6 +484,12 @@ void Qcalculate::on_btnMc_clicked()
     deleteLayoutMemory();
 }
 
+void Qcalculate::on_btnMr_clicked()
+{
+    double dEndData = vctData.begin()->toDouble();
+    ui.edtInput->setText( QString::number( dEndData ) );
+}
+
 void Qcalculate::addDataFrame( const QString& dataValue )
 {
     QFrame* frame = new QFrame();

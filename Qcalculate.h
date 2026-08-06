@@ -46,6 +46,7 @@ public slots:
     void on_btnMP_clicked();
     void on_btnMM_clicked();
     void on_btnMc_clicked();
+    void on_btnMr_clicked();
 
     void addDataFrame( const QString& dataValue );
     void updateLayoutMemory( const QString& dataValue );
