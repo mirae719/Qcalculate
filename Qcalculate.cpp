@@ -446,21 +446,20 @@ void Qcalculate::on_btnPersent_clicked()
 
 }
 
-static QVector<QString> vctData;
-
+//vec
 void Qcalculate::on_btnMs_clicked()
 {
     QString sCurrentText = ui.edtInput->text();
 
     // 첫번째 데이터 삽입.
-    vctData.insert( 0, sCurrentText );
+    vecData.insert( 0, sCurrentText );
 
     addDataFrame( sCurrentText );
 }
 
 void Qcalculate::on_btnMP_clicked()
 {
-    double dEndData = vctData.begin()->toDouble();
+    double dEndData = vecData.begin()->toDouble();
 	double dCurrentText = ui.edtInput->text().toDouble();
 
     ui.edtInput->setText( QString::number( dCurrentText ));
@@ -470,7 +469,7 @@ void Qcalculate::on_btnMP_clicked()
 
 void Qcalculate::on_btnMM_clicked()
 {
-	double dEndData = vctData.begin()->toDouble();
+	double dEndData = vecData.begin()->toDouble();
     double dCurrentText = ui.edtInput->text().toDouble();
 
     ui.edtInput->setText( QString::number( dCurrentText ) );
@@ -486,15 +485,24 @@ void Qcalculate::on_btnMc_clicked()
 
 void Qcalculate::on_btnMr_clicked()
 {
-    double dEndData = vctData.begin()->toDouble();
+    double dEndData = vecData.begin()->toDouble();
     ui.edtInput->setText( QString::number( dEndData ) );
+}
+
+void Qcalculate::on_btnRegister_clicked()
+{
+    ui.stackedWidget->setCurrentIndex( 0 );
+}
+
+void Qcalculate::on_btnMemory_clicked()
+{
+    ui.stackedWidget->setCurrentIndex( 1 );
 }
 
 void Qcalculate::addDataFrame( const QString& dataValue )
 {
     QFrame* frame = new QFrame();
     frame->setFrameShape( QFrame::StyledPanel );
-    frame->setStyleSheet( "QFrame{ background-color:rgb(102, 112, 255) }" );
 
     QVBoxLayout* frameLayout = new QVBoxLayout( frame );
     QLabel* label = new QLabel( dataValue, frame );
@@ -513,11 +521,9 @@ void Qcalculate::addDataFrame( const QString& dataValue )
     vLayout->insertWidget( 0, frame );
 }
 
-static int count = 0;
-
 void Qcalculate::updateLayoutMemory( const QString& dataValue )
 {
-    vctData.insert( 0, dataValue );
+    vecData.insert( 0, dataValue );
     QLayout* layout = ui.scrollAreaWidgetContents->layout();
     QLayoutItem* item = layout->itemAt( 0 );
 
