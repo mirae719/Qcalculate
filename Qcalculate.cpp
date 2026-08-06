@@ -93,107 +93,121 @@ double* Qcalculate::calculated( const QString& sInputText )
     }
 }
 
+void Qcalculate::decidePrint(const QString& sBtn, const QString& sCurrentText)
+{
+	QString sInputText = ui.edtInput->text();
+	if( sInputText.isEmpty() == false )
+	{
+		ui.edtInput->setText( sInputText + sBtn );
+	}
+	else
+	{
+		ui.edtCaluated->setText( sCurrentText + sBtn );
+	}
+}
+
 void Qcalculate::on_btnZero_clicked()
 {
-    QString sInputText = ui.btnZero->text();
+    QString sBtnZeroText = ui.btnZero->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint(sBtnZeroText, sCurrentText);
+
 }
 
 void Qcalculate::on_btnOne_clicked()
 {
-    QString sInputText = ui.btnOne->text();
+    QString sBtnOneText = ui.btnOne->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint( sBtnOneText, sCurrentText );
 }
     
 
 void Qcalculate::on_btnTwo_clicked()
 {
-    QString sInputText = ui.btnTwo->text();
+    QString sBtnTwoText = ui.btnTwo->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint( sBtnTwoText, sCurrentText );
 }
 
 void Qcalculate::on_btnThree_clicked()
 {
-    QString sInputText = ui.btnThree->text();
+    QString sBtnThreeText = ui.btnThree->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint( sBtnThreeText, sCurrentText );
 }
 
 void Qcalculate::on_btnFour_clicked()
 {
-    QString sInputText = ui.btnFour->text();
+    QString sBtnFourText = ui.btnFour->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint( sBtnFourText, sCurrentText );
 }
 
 void Qcalculate::on_btnFive_clicked()
 {
-    QString sInputText = ui.btnFive->text();
+    QString sBtnFiveText = ui.btnFive->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint( sBtnFiveText, sCurrentText );
 }
 
 void Qcalculate::on_btnSix_clicked()
 {
-    QString sInputText = ui.btnSix->text();
+    QString sBtnSixText = ui.btnSix->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint( sBtnSixText, sCurrentText );
 }
 
 void Qcalculate::on_btnSeven_clicked()
 {
-    QString sInputText = ui.btnSeven->text();
+    QString sBtnSevenText = ui.btnSeven->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint( sBtnSevenText, sCurrentText );
 }
 
 void Qcalculate::on_btnAte_clicked()
 {
-    QString sInputText = ui.btnAte->text();
+    QString sBtnAteText = ui.btnAte->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint( sBtnAteText, sCurrentText );
 }
 
 void Qcalculate::on_btnNine_clicked()
 {
-    QString sInputText = ui.btnNine->text();
+    QString sBtnNineText = ui.btnNine->text();
     QString sCurrentText = ui.edtCaluated->text();
 
-    ui.edtCaluated->setText( sCurrentText + sInputText );
+    decidePrint( sBtnNineText, sCurrentText );
 }
 
 void Qcalculate::on_btnMulti_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCaluated->text();
+    QString sInputText = ui.edtInput->text();
 
     if( sCurrentText.isEmpty() == true )
     {
         return;
     }
 
-    if( sCurrentText.endsWith( "+" ) == true ||
-        sCurrentText.endsWith( "-" ) == true ||
-        sCurrentText.endsWith( "*" ) == true ||
-        sCurrentText.endsWith( "/" ) == true )
+    if( sInputText.endsWith( "+" ) == true ||
+        sInputText.endsWith( "-" ) == true ||
+        sInputText.endsWith( "*" ) == true ||
+        sInputText.endsWith( "/" ) == true )
     {
-        return;
+        sInputText.chop(1);
+        ui.edtInput->setText( sInputText + " x " );
     }
 
-    QString sInputText = ui.btnMulti->text();
-
-    ui.edtInput->setText(sCurrentText + sInputText);
+    ui.edtInput->setText( sCurrentText + " x " );
 }
 
 void Qcalculate::on_btnDivide_clicked()
