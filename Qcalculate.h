@@ -17,6 +17,7 @@ public:
 
     double* calculated( const QString& sInputText );
     void decidePrint(const QString& sBtnText, const QString& sCurrentText);
+    void decideForOperatorPrint( const QString& sCurrentText, QString& sInputText, const QString& sBtnText );
 
 public slots:
     void on_btnZero_clicked();

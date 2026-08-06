@@ -188,97 +188,59 @@ void Qcalculate::on_btnNine_clicked()
     decidePrint( sBtnNineText, sCurrentText );
 }
 
+void Qcalculate::decideForOperatorPrint(const QString& sCurrentText, QString& sInputText, const QString& sBtnText)
+{
+	if( sCurrentText.isEmpty() == true )
+	{
+        return;
+	}
+
+	if( sInputText.endsWith( "+" ) == true ||
+		sInputText.endsWith( "-" ) == true ||
+		sInputText.endsWith( "*" ) == true ||
+		sInputText.endsWith( "/" ) == true )
+	{
+		sInputText.chop(1);
+		ui.edtInput->setText( sInputText + sBtnText );
+	}
+
+	ui.edtInput->setText( sCurrentText + sBtnText );
+}
+
 void Qcalculate::on_btnMulti_clicked()
 {
     QString sCurrentText = ui.edtCaluated->text();
     QString sInputText = ui.edtInput->text();
+    QString sBtnMultiText = ui.btnMulti->text();
 
-    if( sCurrentText.isEmpty() == true )
-    {
-        return;
-    }
-
-    if( sInputText.endsWith( "+" ) == true ||
-        sInputText.endsWith( "-" ) == true ||
-        sInputText.endsWith( "*" ) == true ||
-        sInputText.endsWith( "/" ) == true )
-    {
-        sInputText.chop(1);
-        ui.edtInput->setText( sInputText + " x " );
-    }
-
-    ui.edtInput->setText( sCurrentText + " x " );
+    decideForOperatorPrint( sCurrentText, sInputText, sBtnMultiText );
 }
 
 void Qcalculate::on_btnDivide_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCaluated->text();
+    QString sInputText = ui.edtInput->text();
+    QString sBtnDivideText = ui.btnDivide->text();
 
-    if( sCurrentText.isEmpty() == true )
-    {
-        return;
-    }
-
-    if( sCurrentText.endsWith( "+" ) == true ||
-        sCurrentText.endsWith( "-" ) == true ||
-        sCurrentText.endsWith( "*" ) == true ||
-        sCurrentText.endsWith( "/" ) == true )
-    {
-        return;
-    }
-
-	QString sInputText = ui.btnDivide->text();
-    ui.edtInput->setText( sCurrentText + sInputText );
+    decideForOperatorPrint( sCurrentText, sInputText, sBtnDivideText );
 }
 
 void Qcalculate::on_btnAdd_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCaluated->text();
+    QString sInputText = ui.edtInput->text();
+    QString sBtnAddText = ui.btnAdd->text();
 
-    if ( sCurrentText.isEmpty() == true)
-    {
-        return;
-    }
-
-    if( sCurrentText.endsWith( "+" ) == true ||
-        sCurrentText.endsWith( "-" ) == true ||
-        sCurrentText.endsWith( "*" ) == true ||
-        sCurrentText.endsWith( "/" ) == true )
-    {
-        return;
-    }
-
-    if( sCurrentText.isEmpty() == false && sCurrentText.endsWith( " " ) == false )
-    {
-        ui.edtInput->setText( sCurrentText + " " );
-    }
-
-    QString sInputText = ui.btnAdd->text();
-
-    ui.edtInput->setText( sCurrentText + sInputText );
+    decideForOperatorPrint( sCurrentText, sInputText, sBtnAddText );
 }
 
 void Qcalculate::on_btnMinus_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCaluated->text();
+    QString sInputText = ui.edtInput->text();
+    QString sBtnMinus = ui.btnMinus->text();
 
-    if( sCurrentText.isEmpty() == true )
-    {
-        return;
-    }
-    
-
-    if( sCurrentText.endsWith( "+" ) == true ||
-        sCurrentText.endsWith( "-" ) == true ||
-        sCurrentText.endsWith( "*" ) == true ||
-        sCurrentText.endsWith( "/" ) == true )
-    {
-        return;
-    }
-
-    QString sInputText = ui.btnMinus->text();
-
-    ui.edtInput->setText( sCurrentText + sInputText );
+    decideForOperatorPrint( sCurrentText, sInputText, sBtnMinus );
 }
 
 void Qcalculate::on_btnEqual_clicked()
