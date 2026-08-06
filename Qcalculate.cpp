@@ -428,7 +428,7 @@ void Qcalculate::on_btnPersent_clicked()
 
         ui.edtInput->setText( QString::number( dFirst ) + "*" + QString::number( dResult ) );
         ui.edtCaluated->setText( QString::number( dResult ) );
-    }
+	}
     else
     {
         QStringList sLstText = sCurrentText.split( "/" );
@@ -452,14 +452,15 @@ void Qcalculate::on_btnMs_clicked()
 {
     QString sCurrentText = ui.edtInput->text();
 
-    vctData.append( sCurrentText );
+    // 첫번째 데이터 삽입.
+    vctData.insert( 0, sCurrentText );
 
     addDataFrame( sCurrentText );
 }
 
 void Qcalculate::on_btnMP_clicked()
 {
-    double dEndData = vctData.back().toDouble();
+    double dEndData = vctData.begin()->toDouble();
 	double dCurrentText = ui.edtInput->text().toDouble();
 
     ui.edtInput->setText( QString::number( dCurrentText ));
@@ -469,7 +470,7 @@ void Qcalculate::on_btnMP_clicked()
 
 void Qcalculate::on_btnMM_clicked()
 {
-    double dEndData = vctData.back().toDouble();
+	double dEndData = vctData.begin()->toDouble();
     double dCurrentText = ui.edtInput->text().toDouble();
 
     ui.edtInput->setText( QString::number( dCurrentText ) );
@@ -491,6 +492,7 @@ void Qcalculate::addDataFrame( const QString& dataValue )
 
     QVBoxLayout* frameLayout = new QVBoxLayout( frame );
     QLabel* label = new QLabel( dataValue, frame );
+	label->setObjectName( "labelMemory");
     frameLayout->addWidget( label );
 
 	QLayout* layout = ui.scrollAreaWidgetContents->layout();
@@ -505,13 +507,35 @@ void Qcalculate::addDataFrame( const QString& dataValue )
     vLayout->insertWidget( 0, frame );
 }
 
+static int count = 0;
+
 void Qcalculate::updateLayoutMemory( const QString& dataValue )
 {
+    vctData.insert( 0, dataValue );
     QLayout* layout = ui.scrollAreaWidgetContents->layout();
+    QLayoutItem* item = layout->itemAt( 0 );
 
-    deleteLayoutMemory();
+    if( item == nullptr )
+    {
+        return;
+    }
 
-    addDataFrame( dataValue );
+    QWidget* widget = item->widget();
+
+    if( widget == nullptr)
+    {
+        return;
+    }
+	
+	QLabel* label = widget->findChild<QLabel*>( "labelMemory" );
+        
+	if( label == nullptr )
+	{
+        return;
+    }
+
+    label->setText( dataValue );
+
 }
 
 void Qcalculate::deleteLayoutMemory()

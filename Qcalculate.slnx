@@ -2,5 +2,5 @@
   <Configurations>
     <Platform Name="x64" />
   </Configurations>
-  <Project Path="Qcalculate.vcxproj" />
+  <Project Path="Qcalculate.vcxproj" Id="0e7f67fb-c565-4074-ae48-fe0779dcb4f1" />
 </Solution>
