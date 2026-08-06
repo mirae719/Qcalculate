@@ -64,9 +64,9 @@ double* Qcalculate::calculated( const QString& sInputText )
             return &dResult;
         }
 	}
-    else if( sInputText.contains( "*" ) )
+    else if( sInputText.contains( "X" ) )
     {
-        QStringList lstInput = sInputText.split( "*" );
+        QStringList lstInput = sInputText.split( "X" );
 
         if (lstInput.size() == 2)
         {
@@ -283,6 +283,7 @@ void Qcalculate::on_btnEqual_clicked()
         return;
     }
 	*/
+
     if( sCurrentText.isEmpty() == true )
     {
         return;
@@ -503,6 +504,7 @@ void Qcalculate::addDataFrame( const QString& dataValue )
 {
     QFrame* frame = new QFrame();
     frame->setFrameShape( QFrame::StyledPanel );
+    frame->setStyleSheet( "border: none;" );
 
     QVBoxLayout* frameLayout = new QVBoxLayout( frame );
     QLabel* label = new QLabel( dataValue, frame );
