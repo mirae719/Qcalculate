@@ -1,6 +1,5 @@
 #include "Qcalculate.h"
 #include "QMessageBox"
-#include "QSystemTrayIcon"
 
 
 Qcalculate::Qcalculate(QWidget *parent)
@@ -446,6 +445,37 @@ void Qcalculate::on_btnPersent_clicked()
     }
 
 }
+
+static QVector<QString> vctData;
+
+void Qcalculate::on_btnMs_clicked()
+{
+    QString sCurrentText = ui.edtInput->text();
+
+    vctData.append( sCurrentText );
+
+    addDataFrame( sCurrentText );
+}
+
+void Qcalculate::addDataFrame( const QString& dataValue )
+{
+    QFrame* frame = new QFrame();
+    frame->setFrameShape( QFrame::StyledPanel );
+    frame->setStyleSheet( "QFrame{ background-color:rgb(102, 112, 255) }" );
+
+    QVBoxLayout* frameLayout = new QVBoxLayout( frame );
+    QLabel* label = new QLabel( dataValue, frame );
+    frameLayout->addWidget( label );
+
+	QLayout* layout = ui.scrollAreaWidgetContents->layout();
+    if (layout == nullptr)
+    {
+        layout = new QVBoxLayout( ui.scrollAreaWidgetContents );
+    }
+
+    layout->addWidget( frame );
+}
+
 
 
 

@@ -2,6 +2,10 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_Qcalculate.h"
+#include <QFrame>
+#include <QLabel>
+#include <QVBoxLayout>
+
 
 class Qcalculate : public QMainWindow
 {
@@ -38,6 +42,10 @@ public slots:
     void on_btnDivideX_clicked();
     void on_btnRoot_clicked();
     void on_btnPersent_clicked();
+    void on_btnMs_clicked();
+
+    void addDataFrame( const QString& dataValue );
+
 
 private:
     Ui::QcalculateClass ui;
