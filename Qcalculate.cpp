@@ -459,11 +459,28 @@ void Qcalculate::on_btnMs_clicked()
 
 void Qcalculate::on_btnMP_clicked()
 {
-    double endData = vctData.back().toDouble();
+    double dEndData = vctData.back().toDouble();
+	double dCurrentText = ui.edtInput->text().toDouble();
 
-	double sCurrentText = ui.edtInput->text().toDouble();
+    ui.edtInput->setText( QString::number( dCurrentText ));
 
-    ui.edtInput->setText( QString::number( endData + sCurrentText ));
+    updateLayoutMemory(QString::number( dEndData + dCurrentText ));
+}
+
+void Qcalculate::on_btnMM_clicked()
+{
+    double dEndData = vctData.back().toDouble();
+    double dCurrentText = ui.edtInput->text().toDouble();
+
+    ui.edtInput->setText( QString::number( dCurrentText ) );
+
+    updateLayoutMemory( QString::number( dEndData - dCurrentText ) );
+    
+}
+
+void Qcalculate::on_btnMc_clicked()
+{
+    deleteLayoutMemory();
 }
 
 void Qcalculate::addDataFrame( const QString& dataValue )
@@ -482,7 +499,35 @@ void Qcalculate::addDataFrame( const QString& dataValue )
         layout = new QVBoxLayout( ui.scrollAreaWidgetContents );
     }
 
-    layout->addWidget( frame );
+    QVBoxLayout* vLayout = qobject_cast< QVBoxLayout* >( layout );
+
+    // 맨 첫번째로 삽입
+    vLayout->insertWidget( 0, frame );
+}
+
+void Qcalculate::updateLayoutMemory( const QString& dataValue )
+{
+    QLayout* layout = ui.scrollAreaWidgetContents->layout();
+
+    deleteLayoutMemory();
+
+    addDataFrame( dataValue );
+}
+
+void Qcalculate::deleteLayoutMemory()
+{
+    QLayout* layout = ui.scrollAreaWidgetContents->layout();
+
+    if( layout->count() == 0 )
+    {
+        return;
+    }
+
+	QLayoutItem* item = layout->takeAt( 0 );
+    QWidget* widget = item->widget();
+
+    delete widget;
+    widget = nullptr;
 }
 
 

@@ -44,9 +44,12 @@ public slots:
     void on_btnPersent_clicked();
     void on_btnMs_clicked();
     void on_btnMP_clicked();
+    void on_btnMM_clicked();
+    void on_btnMc_clicked();
 
     void addDataFrame( const QString& dataValue );
-
+    void updateLayoutMemory( const QString& dataValue );
+    void deleteLayoutMemory();
 
 private:
     Ui::QcalculateClass ui;
