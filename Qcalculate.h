@@ -43,6 +43,7 @@ public slots:
     void on_btnRoot_clicked();
     void on_btnPersent_clicked();
     void on_btnMs_clicked();
+    void on_btnMP_clicked();
 
     void addDataFrame( const QString& dataValue );
 

@@ -457,6 +457,15 @@ void Qcalculate::on_btnMs_clicked()
     addDataFrame( sCurrentText );
 }
 
+void Qcalculate::on_btnMP_clicked()
+{
+    double endData = vctData.back().toDouble();
+
+	double sCurrentText = ui.edtInput->text().toDouble();
+
+    ui.edtInput->setText( QString::number( endData + sCurrentText ));
+}
+
 void Qcalculate::addDataFrame( const QString& dataValue )
 {
     QFrame* frame = new QFrame();
