@@ -7,19 +7,6 @@ Qcalculate::Qcalculate(QWidget *parent)
 {
     ui.setupUi(this);
 
-    /**
-
-    int n = ui.lineEdit->text().toInt();
-    int a;
-    n += a;
-
-    ui.lineEdit->setText( QString::number( n ) );
-
-	**/
-
-
-	//connect( ui.btnOne, &QPushButton::clicked, this, &Qcalculate::on_btnOne_clicked );
-
 }
 
 Qcalculate::~Qcalculate()
@@ -80,7 +67,7 @@ double* Qcalculate::calculated( const QString& sInputText )
     }
     else
     {
-        QStringList lstInput = sInputText.split( "/" );
+        QStringList lstInput = sInputText.split( "÷" );
 
         if( lstInput.size() == 2 )
         {
@@ -93,23 +80,92 @@ double* Qcalculate::calculated( const QString& sInputText )
     }
 }
 
-void Qcalculate::decidePrint(const QString& sBtn, const QString& sCurrentText)
+void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
 {
-	QString sInputText = ui.edtInput->text();
-	if( sInputText.isEmpty() == false )
-	{
-		ui.edtInput->setText( sInputText + sBtn );
-	}
-	else
-	{
-		ui.edtCaluated->setText( sCurrentText + sBtn );
-	}
+    QString sInputText = ui.edtInput->text();
+    if( sInputText.isEmpty() == false )
+    {
+        if( sInputText.endsWith( "+" ) == true ||
+            sInputText.endsWith( "-" ) == true ||
+            sInputText.endsWith( "÷" ) == true ||
+            sInputText.endsWith( "X" ) == true )
+        {
+            if( isOperator == false )
+            {
+                isOperator = true;
+                sCurrentText.clear();
+            }
+            ui.edtCalculated->setText( sCurrentText + sBtn );
+        }
+        else
+        {
+            ui.edtInput->setText( sInputText + sBtn );
+            isOperator = false;
+        }
+    }
+    else
+    {
+        ui.edtCalculated->setText( sCurrentText + sBtn );
+    }
+
+    // 중간에 ' , ' 넣기
+    QVector<QString> vecText;
+    QMap<int, QString> mapCommaPos;
+    int nCommaCount = 0;
+
+    // 문자열이 4개 이상이며, 콤마가 nCommaCount 갯수에 맞게 들어있다면 return;
+    if( sCurrentText.count() > 3 )
+    {
+    	QString sCommaText = ",";
+    	
+    	for( int idx = 0; idx < sCurrentText.count(); idx++ )
+		{
+            vecText.append( sCurrentText.at( idx ) );
+
+            if( vecText.at( idx ) == sCommaText )
+            {
+                nCommaCount++;
+                mapCommaPos.insert( idx, sCommaText );
+            }
+		}
+
+        int nTextCount = vecText.count() - nCommaCount;
+        int nMustExistCommaCount = nTextCount / 3;
+
+        for( auto it = vecText.end() - 3; it != vecText.begin(); it -= 3 )
+        {
+
+            if( nCommaCount == nMustExistCommaCount )
+            {
+                break;
+            }
+
+            // vec에 ,가 들어있는 위치에 ,가 있는지 확인하고 맞으면 skip;
+            int nIndex = mapCommaPos.key( sCommaText );
+
+            if( vecText.at( nIndex ) == sCommaText )
+            {
+                continue;
+            }
+            vecText.insert( it, sCommaText );
+            nCommaCount++;
+        }
+
+        QString outputText;
+        for( auto it = vecText.begin(); it != vecText.end(); ++it )
+        {
+            outputText += it;
+        }
+
+        ui.edtCalculated->setText( outputText );
+	    
+    }
 }
 
 void Qcalculate::on_btnZero_clicked()
 {
     QString sBtnZeroText = ui.btnZero->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint(sBtnZeroText, sCurrentText);
 
@@ -118,7 +174,7 @@ void Qcalculate::on_btnZero_clicked()
 void Qcalculate::on_btnOne_clicked()
 {
     QString sBtnOneText = ui.btnOne->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnOneText, sCurrentText );
 }
@@ -127,7 +183,7 @@ void Qcalculate::on_btnOne_clicked()
 void Qcalculate::on_btnTwo_clicked()
 {
     QString sBtnTwoText = ui.btnTwo->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnTwoText, sCurrentText );
 }
@@ -135,7 +191,7 @@ void Qcalculate::on_btnTwo_clicked()
 void Qcalculate::on_btnThree_clicked()
 {
     QString sBtnThreeText = ui.btnThree->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnThreeText, sCurrentText );
 }
@@ -143,7 +199,7 @@ void Qcalculate::on_btnThree_clicked()
 void Qcalculate::on_btnFour_clicked()
 {
     QString sBtnFourText = ui.btnFour->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnFourText, sCurrentText );
 }
@@ -151,7 +207,7 @@ void Qcalculate::on_btnFour_clicked()
 void Qcalculate::on_btnFive_clicked()
 {
     QString sBtnFiveText = ui.btnFive->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnFiveText, sCurrentText );
 }
@@ -159,7 +215,7 @@ void Qcalculate::on_btnFive_clicked()
 void Qcalculate::on_btnSix_clicked()
 {
     QString sBtnSixText = ui.btnSix->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnSixText, sCurrentText );
 }
@@ -167,7 +223,7 @@ void Qcalculate::on_btnSix_clicked()
 void Qcalculate::on_btnSeven_clicked()
 {
     QString sBtnSevenText = ui.btnSeven->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnSevenText, sCurrentText );
 }
@@ -175,7 +231,7 @@ void Qcalculate::on_btnSeven_clicked()
 void Qcalculate::on_btnAte_clicked()
 {
     QString sBtnAteText = ui.btnAte->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnAteText, sCurrentText );
 }
@@ -183,7 +239,7 @@ void Qcalculate::on_btnAte_clicked()
 void Qcalculate::on_btnNine_clicked()
 {
     QString sBtnNineText = ui.btnNine->text();
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnNineText, sCurrentText );
 }
@@ -209,7 +265,7 @@ void Qcalculate::decideForOperatorPrint(const QString& sCurrentText, QString& sI
 
 void Qcalculate::on_btnMulti_clicked()
 {
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
     QString sBtnMultiText = ui.btnMulti->text();
 
@@ -218,7 +274,7 @@ void Qcalculate::on_btnMulti_clicked()
 
 void Qcalculate::on_btnDivide_clicked()
 {
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
     QString sBtnDivideText = ui.btnDivide->text();
 
@@ -227,7 +283,7 @@ void Qcalculate::on_btnDivide_clicked()
 
 void Qcalculate::on_btnAdd_clicked()
 {
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
     QString sBtnAddText = ui.btnAdd->text();
 
@@ -236,7 +292,7 @@ void Qcalculate::on_btnAdd_clicked()
 
 void Qcalculate::on_btnMinus_clicked()
 {
-    QString sCurrentText = ui.edtCaluated->text();
+    QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
     QString sBtnMinus = ui.btnMinus->text();
 
@@ -245,39 +301,26 @@ void Qcalculate::on_btnMinus_clicked()
 
 void Qcalculate::on_btnEqual_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
-    /*
-    if( sEdtInput.endsWith( "+" ) == false ||
-        sEdtInput.endsWith( "-" ) == false ||
-        sEdtInput.endsWith( "*" ) == false ||
-        sEdtInput.endsWith( "/" ) == false ||
-        sEdtInput.contains( "+" ) == true ||
-        sEdtInput.contains( "-" ) == true ||
-        sEdtInput.contains( "*" ) == true ||
-        sEdtInput.contains( "/" ) == true )
-    {
-        return;
-    }
-	*/
+    QString sInputText = ui.edtInput->text();
 
-    if( sCurrentText.isEmpty() == true )
+    if( sInputText.isEmpty() == true )
     {
         return;
     }
 
-    double* nResult = calculated( sCurrentText );
+    double* dResult = calculated( sInputText );
 
     // 포인터 -> 값이 들어가기도 하고, 주소가 들어가기도 함
 
-	ui.edtInput->setText( QString::number( *nResult ) );
-    ui.edtCaluated->setText( QString::number( *nResult ) );
+	ui.edtInput->setText( QString::number( *dResult ) );
+    ui.edtCalculated->setText( QString::number( *dResult ) );
     
 }
 
 void Qcalculate::on_btnClear_clicked()
 {
     ui.edtInput->clear();
-    ui.edtCaluated->setText( QString::number( 0 ) );
+    ui.edtCalculated->setText( QString::number( 0 ) );
 }
 
 void Qcalculate::on_btnErase_clicked()
@@ -318,7 +361,7 @@ void Qcalculate::on_btnSquare_clicked()
     double dResult = pow( dCurrent, 2 );
 
     ui.edtInput->setText( ( "sqr(" + sCurrentText + ")" ) );
-    ui.edtCaluated->setText( QString::number( dResult ) );
+    ui.edtCalculated->setText( QString::number( dResult ) );
 }
 
 void Qcalculate::on_btnSign_clicked()
@@ -327,12 +370,12 @@ void Qcalculate::on_btnSign_clicked()
     
     if ( sCurrentText < 0 )
     {
-        ui.edtCaluated->setText( QString::number( abs( sCurrentText ) ) );
+        ui.edtCalculated->setText( QString::number( abs( sCurrentText ) ) );
         ui.edtInput->setText( QString::number( abs( sCurrentText ) ) );
     }
     else
     {
-		ui.edtCaluated->setText( QString::number( sCurrentText * -1 ) );
+		ui.edtCalculated->setText( QString::number( sCurrentText * -1 ) );
         ui.edtInput->setText( QString::number( sCurrentText * -1 ) );
     }
 }
@@ -342,7 +385,7 @@ void Qcalculate::on_btnDivideX_clicked()
     QString sCurrentText = ui.edtInput->text();
 
     ui.edtInput->setText( ( "1/"  "(" + sCurrentText + ")" ) );
-    ui.edtCaluated->setText( QString::number( 1 / sCurrentText.toDouble() ) );
+    ui.edtCalculated->setText( QString::number( 1 / sCurrentText.toDouble() ) );
 }
 
 void Qcalculate::on_btnRoot_clicked()
@@ -350,7 +393,7 @@ void Qcalculate::on_btnRoot_clicked()
     QString sCurrentText = ui.edtInput->text();
 
 	ui.edtInput->setText( ( "sqrt(" + sCurrentText + ")" ) );
-    ui.edtCaluated->setText( QString::number( sqrt( sCurrentText.toDouble() ) ) );
+    ui.edtCalculated->setText( QString::number( sqrt( sCurrentText.toDouble() ) ) );
 }
 
 void Qcalculate::on_btnPersent_clicked()
@@ -374,7 +417,7 @@ void Qcalculate::on_btnPersent_clicked()
         }
 
         ui.edtInput->setText( QString::number( dFirst ) + "+" + QString::number( dResult ) );
-        ui.edtCaluated->setText( QString::number( dResult ) );
+        ui.edtCalculated->setText( QString::number( dResult ) );
     }
     else if( sCurrentText.contains( "-" ) == true )
     {
@@ -389,7 +432,7 @@ void Qcalculate::on_btnPersent_clicked()
         }
 
         ui.edtInput->setText( QString::number( dFirst ) + "-" + QString::number( dResult ) );
-        ui.edtCaluated->setText( QString::number( dResult ) );
+        ui.edtCalculated->setText( QString::number( dResult ) );
     }
     else if ( sCurrentText.contains( "*" ) == true )
     {
@@ -404,7 +447,7 @@ void Qcalculate::on_btnPersent_clicked()
         }
 
         ui.edtInput->setText( QString::number( dFirst ) + "*" + QString::number( dResult ) );
-        ui.edtCaluated->setText( QString::number( dResult ) );
+        ui.edtCalculated->setText( QString::number( dResult ) );
 	}
     else
     {
@@ -418,7 +461,7 @@ void Qcalculate::on_btnPersent_clicked()
             dResult = dFirst / dSecond;
         }
         ui.edtInput->setText( QString::number( dFirst ) + "/" + QString::number( dResult ) );
-        ui.edtCaluated->setText( QString::number( dResult ) );
+        ui.edtCalculated->setText( QString::number( dResult ) );
     }
 
 }

@@ -16,7 +16,7 @@ public:
     ~Qcalculate();
 
     double* calculated( const QString& sInputText );
-    void decidePrint(const QString& sBtnText, const QString& sCurrentText);
+    void decidePrint(const QString& sBtnText, QString& sCurrentText);
     void decideForOperatorPrint( const QString& sCurrentText, QString& sInputText, const QString& sBtnText );
 
 public slots:
@@ -59,4 +59,5 @@ public slots:
 private:
     Ui::QcalculateClass ui;
     QVector<QString> vecData;
+    bool isOperator = false;
 };
