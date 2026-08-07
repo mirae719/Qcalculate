@@ -82,6 +82,13 @@ double* Qcalculate::calculated( const QString& sInputText )
 
 void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
 {
+    if( sCurrentText.count() == 1 && sCurrentText.contains( "0" ) )
+    {
+
+        sCurrentText.clear();
+
+    }
+
     QString sInputText = ui.edtInput->text();
     if( sInputText.isEmpty() == false )
     {
@@ -308,6 +315,8 @@ void Qcalculate::on_btnEqual_clicked()
     {
         return;
     }
+    
+
 
     double* dResult = calculated( sInputText += sCurrentText );
 
@@ -326,36 +335,31 @@ void Qcalculate::on_btnClear_clicked()
 
 void Qcalculate::on_btnErase_clicked()
 {
-    QString sInputText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
-    if (sInputText.isEmpty() == false)
+    if ( sCurrentText.isEmpty() == false)
     {
-        sInputText.chop( 1 );
-        ui.edtInput->setText( sInputText );
+        sCurrentText.chop( 1 );
+        ui.edtCalculated->setText( sCurrentText );
     }
 }
 
 void Qcalculate::on_btnDot_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
-    QString sInputText = ui.btnDot->text();
-
-    if ( sCurrentText.isEmpty() == true )
-    {
-        return;
-    }
+    QString sCurrentText = ui.edtCalculated->text();
+    QString sBtnDotText = ui.btnDot->text();
 
     if ( sCurrentText.contains( "." ) == true )
     {
         return;
     }
 
-    ui.edtInput->setText( sCurrentText + sInputText );
+    ui.edtCalculated->setText( sCurrentText + sBtnDotText );
 }
 
 void Qcalculate::on_btnSquare_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     double dCurrent = sCurrentText.toDouble();
 
