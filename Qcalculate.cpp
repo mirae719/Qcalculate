@@ -302,17 +302,18 @@ void Qcalculate::on_btnMinus_clicked()
 void Qcalculate::on_btnEqual_clicked()
 {
     QString sInputText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     if( sInputText.isEmpty() == true )
     {
         return;
     }
 
-    double* dResult = calculated( sInputText );
+    double* dResult = calculated( sInputText += sCurrentText );
 
     // 포인터 -> 값이 들어가기도 하고, 주소가 들어가기도 함
 
-	ui.edtInput->setText( QString::number( *dResult ) );
+    ui.edtInput->setText( sInputText + "=" );
     ui.edtCalculated->setText( QString::number( *dResult ) );
     
 }
