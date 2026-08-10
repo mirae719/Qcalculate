@@ -421,68 +421,42 @@ void Qcalculate::on_btnRoot_clicked()
 void Qcalculate::on_btnPersent_clicked()
 {
     QString sCurrentText = ui.edtCalculated->text();
-    double dFirst;
-    double dSecond;
-    double dResult;
+    QString sInputText = ui.edtInput->text();
     
-    if( sCurrentText.contains( "+" ) == true )
+    if( sCurrentText.endsWith( "+" ) == true )
     {
+        sInputText.chop(1);
 
-        QStringList sLstText = sCurrentText.split( "+" );
+        dResult = sInputText.toDouble() / sCurrentText.toDouble();
 
-        if( sLstText.size() == 2 )
-        {
-            dFirst = sLstText.at( 0 ).toDouble();
-            dSecond = sLstText.at( 1 ).toDouble();
-
-            dResult = dFirst / dSecond;
-        }
-
-        ui.edtInput->setText( QString::number( dFirst ) + "+" + QString::number( dResult ) );
+        ui.edtInput->setText( sInputText + "+" + QString::number( dResult ) );
         ui.edtCalculated->setText( QString::number( dResult ) );
     }
-    else if( sCurrentText.contains( "-" ) == true )
+    else if( sCurrentText.endsWith( "-" ) == true )
     {
-        QStringList sLstText = sCurrentText.split( "-" );
-        
-        if ( sLstText.size() == 2)
-        {
-            dFirst = sLstText.at( 0 ).toDouble();
-            dSecond = sLstText.at( 1 ).toDouble();
+        sInputText.chop( 1 );
 
-            dResult = dFirst / dSecond;
-        }
+        dResult = sInputText.toDouble() / sCurrentText.toDouble();
 
-        ui.edtInput->setText( QString::number( dFirst ) + "-" + QString::number( dResult ) );
+        ui.edtInput->setText( sInputText + "-" + QString::number( dResult ) );
         ui.edtCalculated->setText( QString::number( dResult ) );
     }
-    else if ( sCurrentText.contains( "*" ) == true )
+    else if ( sCurrentText.endsWith( "X" ) == true )
     {
-        QStringList sLstText = sCurrentText.split( "*" );
+        sInputText.chop( 1 );
 
-        if (sLstText.size() == 2)
-        {
-            dFirst = sLstText.at( 0 ).toDouble();
-            dSecond = sLstText.at( 1 ).toDouble();
+        dResult = sInputText.toDouble() / sCurrentText.toDouble();
 
-            dResult = dFirst / dSecond;
-        }
-
-        ui.edtInput->setText( QString::number( dFirst ) + "*" + QString::number( dResult ) );
+        ui.edtInput->setText( sInputText + "X" + QString::number( dResult ) );
         ui.edtCalculated->setText( QString::number( dResult ) );
 	}
     else
     {
-        QStringList sLstText = sCurrentText.split( "/" );
+        sInputText.chop( 1 );
 
-        if (sLstText.size() == 2)
-        {
-            dFirst = sLstText.at( 0 ).toDouble();
-            dSecond = sLstText.at( 1 ).toDouble();
+        dResult = sInputText.toDouble() / sCurrentText.toDouble();
 
-            dResult = dFirst / dSecond;
-        }
-        ui.edtInput->setText( QString::number( dFirst ) + "/" + QString::number( dResult ) );
+        ui.edtInput->setText( sInputText + "÷" + QString::number( dResult ) );
         ui.edtCalculated->setText( QString::number( dResult ) );
     }
 
