@@ -172,10 +172,23 @@ void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
     }
 }
 
+void Qcalculate::ifCalculatedThanClearText(const QString& sBtnText, const QString& sInputText)
+{
+	if( sInputText.isEmpty() == false && sInputText.endsWith( "=" ) )
+	{
+		ui.edtInput->clear();
+        ui.edtCalculated->clear();
+		ui.edtCalculated->setText( sBtnText );
+	}
+}
+
 void Qcalculate::on_btnZero_clicked()
 {
     QString sBtnZeroText = ui.btnZero->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText(sBtnZeroText, sInputText);
 
     decidePrint(sBtnZeroText, sCurrentText);
     insertComma( sCurrentText );
@@ -186,6 +199,9 @@ void Qcalculate::on_btnOne_clicked()
 {
     QString sBtnOneText = ui.btnOne->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText( sBtnOneText, sInputText );
 
     decidePrint( sBtnOneText, sCurrentText );
     insertComma( sCurrentText );
@@ -196,6 +212,9 @@ void Qcalculate::on_btnTwo_clicked()
 {
     QString sBtnTwoText = ui.btnTwo->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText( sBtnTwoText, sInputText );
 
     decidePrint( sBtnTwoText, sCurrentText );
     insertComma( sCurrentText );
@@ -205,6 +224,9 @@ void Qcalculate::on_btnThree_clicked()
 {
     QString sBtnThreeText = ui.btnThree->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText( sBtnThreeText, sInputText );
 
     decidePrint( sBtnThreeText, sCurrentText );
     insertComma( sCurrentText );
@@ -214,6 +236,9 @@ void Qcalculate::on_btnFour_clicked()
 {
     QString sBtnFourText = ui.btnFour->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText( sBtnFourText, sInputText );
 
     decidePrint( sBtnFourText, sCurrentText );
     insertComma( sCurrentText );
@@ -223,6 +248,9 @@ void Qcalculate::on_btnFive_clicked()
 {
     QString sBtnFiveText = ui.btnFive->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText( sBtnFiveText, sInputText );
 
     decidePrint( sBtnFiveText, sCurrentText );
     insertComma( sCurrentText );
@@ -232,6 +260,9 @@ void Qcalculate::on_btnSix_clicked()
 {
     QString sBtnSixText = ui.btnSix->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText( sBtnSixText, sInputText );
 
     decidePrint( sBtnSixText, sCurrentText );
     insertComma( sCurrentText );
@@ -241,6 +272,9 @@ void Qcalculate::on_btnSeven_clicked()
 {
     QString sBtnSevenText = ui.btnSeven->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText( sBtnSevenText, sInputText );
 
     decidePrint( sBtnSevenText, sCurrentText );
     insertComma( sCurrentText );
@@ -250,6 +284,9 @@ void Qcalculate::on_btnAte_clicked()
 {
     QString sBtnAteText = ui.btnAte->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText( sBtnAteText, sInputText );
 
     decidePrint( sBtnAteText, sCurrentText );
     insertComma( sCurrentText );
@@ -259,6 +296,9 @@ void Qcalculate::on_btnNine_clicked()
 {
     QString sBtnNineText = ui.btnNine->text();
     QString sCurrentText = ui.edtCalculated->text();
+    QString sInputText = ui.edtInput->text();
+
+    ifCalculatedThanClearText( sBtnNineText, sInputText );
 
     decidePrint( sBtnNineText, sCurrentText );
     insertComma( sCurrentText );
@@ -470,7 +510,7 @@ void Qcalculate::on_btnPersent_clicked()
 //vec
 void Qcalculate::on_btnMs_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     // 첫번째 데이터 삽입.
     vecData.insert( 0, sCurrentText );
@@ -481,9 +521,7 @@ void Qcalculate::on_btnMs_clicked()
 void Qcalculate::on_btnMP_clicked()
 {
     double dEndData = vecData.begin()->toDouble();
-	double dCurrentText = ui.edtInput->text().toDouble();
-
-    ui.edtInput->setText( QString::number( dCurrentText ));
+	double dCurrentText = ui.edtCalculated->text().toDouble();
 
     updateLayoutMemory(QString::number( dEndData + dCurrentText ));
 }
@@ -491,12 +529,9 @@ void Qcalculate::on_btnMP_clicked()
 void Qcalculate::on_btnMM_clicked()
 {
 	double dEndData = vecData.begin()->toDouble();
-    double dCurrentText = ui.edtInput->text().toDouble();
-
-    ui.edtInput->setText( QString::number( dCurrentText ) );
+    double dCurrentText = ui.edtCalculated->text().toDouble();
 
     updateLayoutMemory( QString::number( dEndData - dCurrentText ) );
-    
 }
 
 void Qcalculate::on_btnMc_clicked()
@@ -522,14 +557,33 @@ void Qcalculate::on_btnMemory_clicked()
 
 void Qcalculate::addDataFrame( const QString& dataValue )
 {
-    QFrame* frame = new QFrame();
-    frame->setFrameShape( QFrame::StyledPanel );
-    frame->setStyleSheet( "border: none;" );
+    ui.edtInfo2->hide();
 
-    QVBoxLayout* frameLayout = new QVBoxLayout( frame );
-    QLabel* label = new QLabel( dataValue, frame );
+    QFrame* frame = new QFrame();
+    frame->setAttribute( Qt::WA_StyledBackground, true );
+    frame->setStyleSheet(
+        "QFrame{ "
+        "   border: none;"
+        "   margin-left: auto;"
+        "   font-family: '맑은 고딕';"
+        "   font-size: 17pt;"
+        "   font-weight: bold;"
+		"}"
+        "QFrame:hover{"
+		"   background-color:rgb(234, 234, 234);"
+		"}"
+		"QLabel:hover{"
+		"   background-color:rgb(234, 234, 234);"
+		"}"
+        );
+
+    QHBoxLayout* frameLayout = new QHBoxLayout( frame );
+	QLabel* label = new QLabel( dataValue, frame );
+    frameLayout->setContentsMargins( 10, 5, 10, 5 );
 	label->setObjectName( "labelMemory");
-    frameLayout->addWidget( label );
+
+    frameLayout->addStretch();
+    frameLayout->addWidget(label);
 
 	QLayout* layout = ui.scrollAreaWidgetContents->layout();
     if (layout == nullptr)
@@ -538,9 +592,11 @@ void Qcalculate::addDataFrame( const QString& dataValue )
     }
 
     QVBoxLayout* vLayout = qobject_cast< QVBoxLayout* >( layout );
+    if( vLayout )
+    {
+        vLayout->insertWidget( 0, frame );
+    }
 
-    // 맨 첫번째로 삽입
-    vLayout->insertWidget( 0, frame );
 }
 
 void Qcalculate::updateLayoutMemory( const QString& dataValue )
@@ -586,6 +642,11 @@ void Qcalculate::deleteLayoutMemory()
 
     delete widget;
     widget = nullptr;
+
+    if (layout->count() == 0)
+    {
+        ui.edtInfo2->show();
+    }
 }
 
 
