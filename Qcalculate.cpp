@@ -332,8 +332,15 @@ void Qcalculate::on_btnEqual_clicked()
         }
     	return;
     }
+    else if( sInputText.isEmpty() == false && sInputText.endsWith( "=" ) )
+    {
+        return;
+    }
 
-
+    if( sInputText.contains( "=" ) )
+    {
+        return;
+    }
 
     double* dResult = calculated( sInputText += sCurrentText );
 
@@ -388,23 +395,21 @@ void Qcalculate::on_btnSquare_clicked()
 
 void Qcalculate::on_btnSign_clicked()
 {
-    double sCurrentText = ui.edtInput->text().toDouble();
+    double sCurrentText = ui.edtCalculated->text().toDouble();
     
     if ( sCurrentText < 0 )
     {
         ui.edtCalculated->setText( QString::number( abs( sCurrentText ) ) );
-        ui.edtInput->setText( QString::number( abs( sCurrentText ) ) );
     }
     else
     {
 		ui.edtCalculated->setText( QString::number( sCurrentText * -1 ) );
-        ui.edtInput->setText( QString::number( sCurrentText * -1 ) );
     }
 }
 
 void Qcalculate::on_btnDivideX_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
     ui.edtInput->setText( ( "1/"  "(" + sCurrentText + ")" ) );
     ui.edtCalculated->setText( QString::number( 1 / sCurrentText.toDouble() ) );
