@@ -8,7 +8,6 @@ Qcalculate::Qcalculate(QWidget *parent)
     ui.setupUi(this);
     ui.edtCalculated->setAlignment( Qt::AlignRight );
     ui.edtInput->setAlignment( Qt::AlignRight );
-
 }
 
 Qcalculate::~Qcalculate()
@@ -395,14 +394,46 @@ void Qcalculate::on_btnEqual_clicked()
         }
     	return;
     }
-    else if( sInputText.isEmpty() == false && sInputText.endsWith( "=" ) )
-    {
-        return;
-    }
 
     if( sInputText.contains( "=" ) )
     {
-        return;
+        if( sInputText.contains( "+" ) == true )
+        {
+			QStringList sLiText = sInputText.split( "+" );
+            QString sTextSecond = sLiText.at( 1 );
+            sTextSecond.remove( "=" );
+
+            sInputText = sCurrentText + "+";
+            sCurrentText = sTextSecond;
+        }
+        else if( sInputText.contains( "-" ) == true )
+        {
+            QStringList sLiText = sInputText.split( "-" );
+            QString sTextSecond = sLiText.at( 1 );
+            sTextSecond.remove( "=" );
+
+
+            sInputText = sCurrentText + "-";
+            sCurrentText = sTextSecond;
+        }
+        else if( sInputText.contains( "X" ) == true )
+        {
+            QStringList sLiText = sInputText.split( "X" );
+            QString sTextSecond = sLiText.at( 1 );
+            sTextSecond.remove( "=" );
+
+            sInputText = sCurrentText + "X";
+            sCurrentText = sTextSecond;
+        }
+        else
+        {
+            QStringList sLiText = sInputText.split( "÷" );
+            QString sTextSecond = sLiText.at( 1 );
+            sTextSecond.remove( "=" );
+
+            sInputText = sCurrentText + "÷";
+            sCurrentText = sTextSecond;
+        }
     }
 
     double* dResult = calculated( sInputText += sCurrentText );
