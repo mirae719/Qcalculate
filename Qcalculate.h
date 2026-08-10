@@ -20,6 +20,7 @@ public:
     void decidePrint(const QString& sBtnText, QString& sCurrentText);
     void ifCalculatedThanClearText(const QString& sBtnZeroText, const QString& sInputText);
     void decideForOperatorPrint( const QString& sCurrentText, QString& sInputText, const QString& sBtnText );
+    void removeComma(QString& sCurrentText);
 
 public slots:
     void on_btnZero_clicked();
@@ -54,12 +55,15 @@ public slots:
     void on_btnRegister_clicked();
     void on_btnMemory_clicked();
 
-    void addDataFrame( const QString& dataValue );
+    void addDataFrame(const bool& isPageOne, const QString& dataValue );
     void updateLayoutMemory( const QString& dataValue );
     void deleteLayoutMemory();
 
 private:
     Ui::QcalculateClass ui;
-    QVector<QString> vecData;
+    QVector<QString> vecMemoryData;
+    QVector<QString> vecRegisterData;
     bool isOperator = false;
+    bool isRemove = false;
+    bool isPageOne;
 };
