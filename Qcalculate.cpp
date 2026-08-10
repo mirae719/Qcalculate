@@ -80,6 +80,62 @@ double* Qcalculate::calculated( const QString& sInputText )
     }
 }
 
+void Qcalculate::insertComma(QString& sCurrentText)
+{
+	// 중간에 ' , ' 넣기
+	QVector<QString> vecText;
+	QMap<int, QString> mapCommaPos;
+	int nCommaCount = 0;
+
+	// 문자열이 4개 이상이며, 콤마가 nCommaCount 갯수에 맞게 들어있다면 return;
+	if( sCurrentText.count() >= 4 )
+	{
+		QString sCommaText = ",";
+    	
+		for( int idx = 0; idx < sCurrentText.count(); idx++ )
+		{
+			vecText.append( sCurrentText.at( idx ) );
+
+			if( vecText.at( idx ) == sCommaText )
+			{
+				nCommaCount++;
+				mapCommaPos.insert( idx, sCommaText );
+			}
+		}
+
+		int nTextCount = vecText.count() - nCommaCount; // 현재 출력된 문자열에서 콤마만 뺀 갯수;
+		int nMustExistCommaCount = nTextCount / 3; // 반드시 있어야 할 콤마 갯수
+		QList<int> liCommaIdx = mapCommaPos.keys();  // comma 위치가 들어있는 인덱스 추출;
+
+		for( auto it = vecText.end() - 3; it != vecText.begin(); it -= 3 )
+		{
+
+			if( nCommaCount == nMustExistCommaCount )
+			{
+				break;
+			}
+
+			// vec에 ,가 들어있는 위치에 ,가 있는지 확인하고 맞으면 skip;
+			for( int idx = 0; 0 < liCommaIdx.count(); idx++ )
+				if( vecText.at( liCommaIdx.at( idx ) ) == sCommaText )
+				{
+					continue;
+				}
+
+			vecText.insert( it, sCommaText );
+			nCommaCount++;
+		}
+
+		QString sOutputText;
+		for( auto it = vecText.begin(); it != vecText.end(); ++it )
+		{
+			sOutputText += it;
+			ui.edtCalculated->setText( sOutputText );
+		}
+
+	}
+}
+
 void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
 {
     if( sCurrentText.count() == 1 && sCurrentText.contains( "0" ) )
@@ -114,59 +170,6 @@ void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
     {
         ui.edtCalculated->setText( sCurrentText + sBtn );
     }
-
-    // 중간에 ' , ' 넣기
-    QVector<QString> vecText;
-    QMap<int, QString> mapCommaPos;
-    int nCommaCount = 0;
-
-    // 문자열이 4개 이상이며, 콤마가 nCommaCount 갯수에 맞게 들어있다면 return;
-    if( sCurrentText.count() > 3 )
-    {
-    	QString sCommaText = ",";
-    	
-    	for( int idx = 0; idx < sCurrentText.count(); idx++ )
-		{
-            vecText.append( sCurrentText.at( idx ) );
-
-            if( vecText.at( idx ) == sCommaText )
-            {
-                nCommaCount++;
-                mapCommaPos.insert( idx, sCommaText );
-            }
-		}
-
-        int nTextCount = vecText.count() - nCommaCount;
-        int nMustExistCommaCount = nTextCount / 3;
-
-        for( auto it = vecText.end() - 3; it != vecText.begin(); it -= 3 )
-        {
-
-            if( nCommaCount == nMustExistCommaCount )
-            {
-                break;
-            }
-
-            // vec에 ,가 들어있는 위치에 ,가 있는지 확인하고 맞으면 skip;
-            int nIndex = mapCommaPos.key( sCommaText );
-
-            if( vecText.at( nIndex ) == sCommaText )
-            {
-                continue;
-            }
-            vecText.insert( it, sCommaText );
-            nCommaCount++;
-        }
-
-        QString outputText;
-        for( auto it = vecText.begin(); it != vecText.end(); ++it )
-        {
-            outputText += it;
-        }
-
-        ui.edtCalculated->setText( outputText );
-	    
-    }
 }
 
 void Qcalculate::on_btnZero_clicked()
@@ -175,6 +178,7 @@ void Qcalculate::on_btnZero_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint(sBtnZeroText, sCurrentText);
+    insertComma( sCurrentText );
 
 }
 
@@ -184,6 +188,7 @@ void Qcalculate::on_btnOne_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnOneText, sCurrentText );
+    insertComma( sCurrentText );
 }
     
 
@@ -193,6 +198,7 @@ void Qcalculate::on_btnTwo_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnTwoText, sCurrentText );
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnThree_clicked()
@@ -201,6 +207,7 @@ void Qcalculate::on_btnThree_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnThreeText, sCurrentText );
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnFour_clicked()
@@ -209,6 +216,7 @@ void Qcalculate::on_btnFour_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnFourText, sCurrentText );
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnFive_clicked()
@@ -217,6 +225,7 @@ void Qcalculate::on_btnFive_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnFiveText, sCurrentText );
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnSix_clicked()
@@ -225,6 +234,7 @@ void Qcalculate::on_btnSix_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnSixText, sCurrentText );
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnSeven_clicked()
@@ -233,6 +243,7 @@ void Qcalculate::on_btnSeven_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnSevenText, sCurrentText );
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnAte_clicked()
@@ -241,6 +252,7 @@ void Qcalculate::on_btnAte_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnAteText, sCurrentText );
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnNine_clicked()
@@ -249,6 +261,7 @@ void Qcalculate::on_btnNine_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     decidePrint( sBtnNineText, sCurrentText );
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::decideForOperatorPrint(const QString& sCurrentText, QString& sInputText, const QString& sBtnText)
@@ -313,9 +326,13 @@ void Qcalculate::on_btnEqual_clicked()
 
     if( sInputText.isEmpty() == true )
     {
-        return;
+        if( sCurrentText.isEmpty() == false )
+        {
+            ui.edtInput->setText( sCurrentText + "=" );
+        }
+    	return;
     }
-    
+
 
 
     double* dResult = calculated( sInputText += sCurrentText );
@@ -403,7 +420,7 @@ void Qcalculate::on_btnRoot_clicked()
 
 void Qcalculate::on_btnPersent_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCalculated->text();
     double dFirst;
     double dSecond;
     double dResult;
