@@ -382,38 +382,7 @@ void Qcalculate::on_btnEqual_clicked()
 {
     QString sInputText = ui.edtInput->text();
     QString sCurrentText = ui.edtCalculated->text();
-
-    if( sInputText.contains( "+" ) == true )
-    {
-        QStringList sLiText = sInputText.split( "+" );
-        QString sTextFirst = sLiText.at( 0 );
-        QString sTextSecond = sLiText.at( 1 );
-        sTextSecond.remove( "," );
-        sInputText = sTextFirst + "+" + sTextSecond;
-    }
-    else if( sInputText.contains( "-" ) == true )
-    {
-        QStringList sLiText = sInputText.split( "-" );
-        QString sTextFirst = sLiText.at( 0 );
-        QString sTextSecond = sLiText.at( 1 );
-        sTextSecond.remove( "," );
-        sInputText = sTextFirst + "-" + sTextSecond;
-    }
-    else if( sInputText.contains( "X" ) == true )
-    {
-        QStringList sLiText = sInputText.split( "X" );
-        QString sTextFirst = sLiText.at( 0 );
-        QString sTextSecond = sLiText.at( 1 );
-        sTextSecond.remove( "," );
-        sInputText = sTextFirst + "X" + sTextSecond;
-    }else
-    {
-        QStringList sLiText = sInputText.split( "÷" );
-        QString sTextFirst = sLiText.at( 0 );
-        QString sTextSecond = sLiText.at( 1 );
-        sTextSecond.remove( "," );
-        sInputText = sTextFirst + "÷" + sTextSecond;
-    }
+    sCurrentText.remove( "," );
 			
     if( sInputText.isEmpty() == true )
     {
