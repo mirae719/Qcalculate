@@ -6,6 +6,8 @@ Qcalculate::Qcalculate(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+    ui.edtCalculated->setAlignment( Qt::AlignRight );
+    ui.edtInput->setAlignment( Qt::AlignRight );
 
 }
 
@@ -383,6 +385,7 @@ void Qcalculate::on_btnEqual_clicked()
     QString sInputText = ui.edtInput->text();
     QString sCurrentText = ui.edtCalculated->text();
     sCurrentText.remove( "," );
+
 			
     if( sInputText.isEmpty() == true )
     {
@@ -407,7 +410,7 @@ void Qcalculate::on_btnEqual_clicked()
     // 포인터 -> 값이 들어가기도 하고, 주소가 들어가기도 함
 
     ui.edtInput->setText( sInputText + "=" );
-    ui.edtCalculated->setText( QString::number( *dResult ) );
+    ui.edtCalculated->setText( QString::number( *dResult, 'g', 16 ) );
 
     // 기록 하기.
     isPageOne = true;
