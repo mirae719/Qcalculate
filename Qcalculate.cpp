@@ -425,7 +425,7 @@ void Qcalculate::on_btnEqual_clicked()
             sInputText = sCurrentText + "X";
             sCurrentText = sTextSecond;
         }
-        else
+        else if( sInputText.contains( "÷" ) == true )
         {
             QStringList sLiText = sInputText.split( "÷" );
             QString sTextSecond = sLiText.at( 1 );
@@ -433,6 +433,12 @@ void Qcalculate::on_btnEqual_clicked()
 
             sInputText = sCurrentText + "÷";
             sCurrentText = sTextSecond;
+        }
+        else
+        {
+            isPageOne = true;
+            addDataFrame( isPageOne, sInputText + sCurrentText );
+            return;
         }
     }
 
@@ -637,6 +643,12 @@ void Qcalculate::deleteLayoutRegister()
 
 void Qcalculate::on_btnRegisterClear_clicked()
 {
+    QLayout* layout = ui.scrollAreaWidgetContents_2->layout();
+    if (layout == nullptr)
+    {
+        return;
+    }
+
     vecRegisterData.clear();
     deleteLayoutRegister();
 }
