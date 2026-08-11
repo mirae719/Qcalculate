@@ -395,6 +395,7 @@ void Qcalculate::on_btnEqual_clicked()
     	return;
     }
 
+    // = 연사자 계속 계산
     if( sInputText.contains( "=" ) )
     {
         if( sInputText.contains( "+" ) == true )
@@ -411,7 +412,6 @@ void Qcalculate::on_btnEqual_clicked()
             QStringList sLiText = sInputText.split( "-" );
             QString sTextSecond = sLiText.at( 1 );
             sTextSecond.remove( "=" );
-
 
             sInputText = sCurrentText + "-";
             sCurrentText = sTextSecond;
@@ -440,14 +440,14 @@ void Qcalculate::on_btnEqual_clicked()
 
     // 포인터 -> 값이 들어가기도 하고, 주소가 들어가기도 함
 
-    ui.edtInput->setText( sInputText + "=" );
+    ui.edtInput->setText( sInputText += "=" );
     ui.edtCalculated->setText( QString::number( *dResult, 'g', 16 ) );
 
     // 기록 하기.
     isPageOne = true;
-    // addDataFrame( isPageOne, QString::number() );
-    
-    
+	addDataFrame( isPageOne, sInputText + QString::number( *dResult, 'g', 16 ) );
+
+
 }
 
 void Qcalculate::on_btnClear_clicked()
@@ -615,11 +615,45 @@ void Qcalculate::on_btnMemory_clicked()
     ui.stackedWidget->setCurrentIndex( 1 );
 }
 
+void Qcalculate::deleteLayoutRegister()
+{
+	QLayout* layout = ui.scrollAreaWidgetContents_2->layout();
+
+	if( layout->count() == 0 )
+	{
+        return;
+	}
+
+	QLayoutItem* item = layout->takeAt( 0 );
+	QWidget* widget = item->widget();
+
+	delete widget;
+	widget = nullptr;
+
+	if( layout->count() == 0 )
+	{
+		ui.edtInfo->show();
+	}
+}
+
+void Qcalculate::on_btnRegisterClear_clicked()
+{
+    vecRegisterData.clear();
+    deleteLayoutRegister();
+}
+
 void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
 {
     if( isPageOne == true )
     {
         ui.edtInfo->hide();
+
+        QStringList sLiText = dataValue.split("=");
+        QString sTextFirst = sLiText.at( 0 );
+        QString sTextSecond = sLiText.at( 1 );
+
+        vecRegisterData.append( sTextFirst );
+        vecRegisterData.append( sTextSecond );
 
         QFrame* frame = new QFrame();
         frame->setAttribute( Qt::WA_StyledBackground, true );
@@ -647,10 +681,10 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
         frameLayout->addStretch();
         frameLayout->addWidget( label );
 
-        QLayout* layout = ui.scrollAreaWidgetContents->layout();
+        QLayout* layout = ui.scrollAreaWidgetContents_2->layout();
         if( layout == nullptr )
         {
-            layout = new QVBoxLayout( ui.scrollAreaWidgetContents );
+            layout = new QVBoxLayout( ui.scrollAreaWidgetContents_2 );
         }
 
         QVBoxLayout* vLayout = qobject_cast< QVBoxLayout* >( layout );

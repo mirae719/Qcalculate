@@ -54,6 +54,8 @@ public slots:
     void on_btnMr_clicked();
     void on_btnRegister_clicked();
     void on_btnMemory_clicked();
+    void deleteLayoutRegister();
+    void on_btnRegisterClear_clicked();
 
     void addDataFrame(const bool& isPageOne, const QString& dataValue );
     void updateLayoutMemory( const QString& dataValue );
