@@ -68,4 +68,5 @@ private:
     bool isOperator = false;
     bool isRemove = false;
     bool isPageOne;
+    bool isCreateComma;
 };

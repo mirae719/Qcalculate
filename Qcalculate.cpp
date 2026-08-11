@@ -1,13 +1,15 @@
 #include "Qcalculate.h"
-#include "QMessageBox"
 
+#include <valarray>
 
 Qcalculate::Qcalculate(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+    this->setWindowOpacity( 0.99 );
     ui.edtCalculated->setAlignment( Qt::AlignRight );
     ui.edtInput->setAlignment( Qt::AlignRight );
+    
 }
 
 Qcalculate::~Qcalculate()
@@ -81,12 +83,143 @@ double* Qcalculate::calculated( const QString& sInputText )
     }
 }
 
-void Qcalculate::insertComma(QString& sCurrentText)
+/*
+void Qcalculate::insertComma( QString& sCurrentText )
+{
+    QMap<int, QString> mapCommaPos;
+    int nCommaCount = 0;
+
+    if( sCurrentText.count() >= 4 )
+    {
+        // 쉼표가 있는 인덱스 위치를 map에 저장. (key)
+	    for (int idx = 0; idx < sCurrentText.count(); idx++)
+	    {
+            if( sCurrentText.at( idx ) == "," )
+            {
+                mapCommaPos.insert( idx, "," );
+                nCommaCount++;
+            }
+	    }
+
+        int nMustExistCommaCount = ( sCurrentText.count() - nCommaCount ) / 3; // 있어야 할 쉼표 갯수
+
+        if( nCommaCount == nMustExistCommaCount )
+        {
+            return; // 쉼표를 다 채웠을 경우 return;
+        }
+
+        for( int idx = sCurrentText.count()-3; idx < sCurrentText.count(); idx-=3 )
+        {
+            for( int idx2 = 0; idx2 < mapCommaPos.count(); idx2++ )
+            {
+                if( sCurrentText.at( idx ) == mapCommaPos.value( idx2 ) )
+                {
+                    continue;
+                }
+
+            }
+
+			sCurrentText.insert( idx, "," );
+        }
+
+        ui.edtCalculated->setText( sCurrentText );
+
+    }
+}
+*/
+
+/*
+void Qcalculate::insertComma( QString& sCurrentText )
+{
+    QMap<int, QMap<int, QString>> mapComma; // key: 몇번째 콤마, value: 콤마 위치 변경 map
+    QMap<int, QString> mapCommaPos;
+	int nCommaCount = 0;
+    int nMoveCount = 3;
+
+    if( sCurrentText.count() >= 4 )
+    {
+        if( isCreateComma == false )
+        {
+            sCurrentText.insert( 1, "," );
+            ui.edtCalculated->setText( sCurrentText );
+            nCommaCount++;
+        	isCreateComma = true;
+
+            for( int idx = 0; idx < nCommaCount; idx++ )
+            {
+                if( mapCommaPos.value( idx ) == sCurrentText.at( idx ) )
+                {
+                    continue;
+                }
+
+                mapCommaPos.insert( 1, "," ); // 콤마 위치 변경 map
+                mapComma.insert( idx, mapCommaPos ); // 콤마 순서 map
+            }
+        }
+        else
+        {
+            for( int idx = 0; idx < mapComma.count(); idx++ )
+            {
+                if( nMoveCount == 0 )
+                {
+                    break;
+                }
+
+                mapComma.value( idx );
+                nMoveCount--;
+            }
+        }
+	    
+    }
+}
+*/
+void Qcalculate::insertComma( QString& sCurrentText )
+{
+    QString sPureText = sCurrentText;
+    sPureText.remove( "," );
+
+    if( sPureText.isEmpty() )
+    {
+        ui.edtCalculated->setText( sPureText );
+        sCurrentText = sPureText;
+        return;
+    }
+
+    QStringList sLiParts = sPureText.split( "." );
+
+    bool ok = false;
+
+    qlonglong lNumber = sLiParts[ 0 ].toLongLong( &ok );
+
+    if( ok == true )
+    {
+        QLocale locale( QLocale::English );
+        QString formattedText = locale.toString( lNumber );
+
+        if( sLiParts.size() > 1 )
+        {
+            formattedText += "." + sLiParts[ 1 ];
+        }
+        else if( sPureText.contains( '.' ) ) {
+            formattedText += ".";
+        }
+
+        sCurrentText = formattedText;
+        ui.edtCalculated->setText( sCurrentText );
+    }
+
+
+}
+
+/*
+void Qcalculate::insertComma( QString& sCurrentText )
 {
 	// 중간에 ' , ' 넣기
 	QVector<QString> vecText;
 	QMap<int, QString> mapCommaPos;
 	int nCommaCount = 0;
+
+    sCurrentText += "";
 
 	// 문자열이 4개 이상이며, 콤마가 nCommaCount 갯수에 맞게 들어있다면 return;
 	if( sCurrentText.count() >= 4 )
@@ -136,6 +269,7 @@ void Qcalculate::insertComma(QString& sCurrentText)
 
 	}
 }
+*/
 
 void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
 {
@@ -159,7 +293,7 @@ void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
                 isOperator = true;
                 sCurrentText.clear();
             }
-            ui.edtCalculated->setText( sCurrentText + sBtn );
+            ui.edtCalculated->setText( sCurrentText += sBtn );
         }
         else
         {
@@ -169,7 +303,7 @@ void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
     }
     else
     {
-        ui.edtCalculated->setText( sCurrentText + sBtn );
+        ui.edtCalculated->setText( sCurrentText += sBtn );
     }
 }
 
@@ -254,7 +388,7 @@ void Qcalculate::on_btnFive_clicked()
     ifCalculatedThanClearText( sBtnFiveText, sInputText );
 
     decidePrint( sBtnFiveText, sCurrentText );
-    insertComma( sCurrentText );
+	insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnSix_clicked()
