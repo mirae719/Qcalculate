@@ -385,6 +385,18 @@ void Qcalculate::on_btnEqual_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     sCurrentText.remove( "," );
 
+    if( sCurrentText.endsWith( "." ) )
+    {
+        sInputText = sCurrentText.remove( "." );
+
+        ui.edtInput->setText( sInputText += "=" );
+        ui.edtCalculated->setText( sCurrentText );
+
+        isPageOne = true;
+        addDataFrame( isPageOne, sInputText + sCurrentText );
+        return;
+    }
+
 			
     if( sInputText.isEmpty() == true )
     {
