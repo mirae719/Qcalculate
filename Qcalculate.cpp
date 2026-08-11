@@ -323,10 +323,10 @@ void Qcalculate::on_btnZero_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText(sBtnZeroText, sInputText);
-
     decidePrint(sBtnZeroText, sCurrentText);
     insertComma( sCurrentText );
+	
+	ifCalculatedThanClearText(sBtnZeroText, sInputText);
 
 }
 
@@ -336,10 +336,10 @@ void Qcalculate::on_btnOne_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText( sBtnOneText, sInputText );
-
     decidePrint( sBtnOneText, sCurrentText );
     insertComma( sCurrentText );
+
+    ifCalculatedThanClearText( sBtnOneText, sInputText );
 }
     
 
@@ -349,10 +349,10 @@ void Qcalculate::on_btnTwo_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText( sBtnTwoText, sInputText );
-
     decidePrint( sBtnTwoText, sCurrentText );
     insertComma( sCurrentText );
+
+    ifCalculatedThanClearText( sBtnTwoText, sInputText );
 }
 
 void Qcalculate::on_btnThree_clicked()
@@ -361,10 +361,10 @@ void Qcalculate::on_btnThree_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText( sBtnThreeText, sInputText );
-
     decidePrint( sBtnThreeText, sCurrentText );
     insertComma( sCurrentText );
+
+    ifCalculatedThanClearText( sBtnThreeText, sInputText );
 }
 
 void Qcalculate::on_btnFour_clicked()
@@ -373,10 +373,10 @@ void Qcalculate::on_btnFour_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText( sBtnFourText, sInputText );
-
     decidePrint( sBtnFourText, sCurrentText );
     insertComma( sCurrentText );
+
+    ifCalculatedThanClearText( sBtnFourText, sInputText );
 }
 
 void Qcalculate::on_btnFive_clicked()
@@ -385,10 +385,10 @@ void Qcalculate::on_btnFive_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText( sBtnFiveText, sInputText );
-
     decidePrint( sBtnFiveText, sCurrentText );
 	insertComma( sCurrentText );
+
+    ifCalculatedThanClearText( sBtnFiveText, sInputText );
 }
 
 void Qcalculate::on_btnSix_clicked()
@@ -397,10 +397,10 @@ void Qcalculate::on_btnSix_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText( sBtnSixText, sInputText );
-
     decidePrint( sBtnSixText, sCurrentText );
     insertComma( sCurrentText );
+
+    ifCalculatedThanClearText( sBtnSixText, sInputText );
 }
 
 void Qcalculate::on_btnSeven_clicked()
@@ -409,10 +409,11 @@ void Qcalculate::on_btnSeven_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText( sBtnSevenText, sInputText );
-
     decidePrint( sBtnSevenText, sCurrentText );
     insertComma( sCurrentText );
+
+    ifCalculatedThanClearText( sBtnSevenText, sInputText );
+
 }
 
 void Qcalculate::on_btnAte_clicked()
@@ -421,10 +422,10 @@ void Qcalculate::on_btnAte_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText( sBtnAteText, sInputText );
-
     decidePrint( sBtnAteText, sCurrentText );
     insertComma( sCurrentText );
+    ifCalculatedThanClearText( sBtnAteText, sInputText );
+
 }
 
 void Qcalculate::on_btnNine_clicked()
@@ -433,10 +434,10 @@ void Qcalculate::on_btnNine_clicked()
     QString sCurrentText = ui.edtCalculated->text();
     QString sInputText = ui.edtInput->text();
 
-    ifCalculatedThanClearText( sBtnNineText, sInputText );
-
     decidePrint( sBtnNineText, sCurrentText );
     insertComma( sCurrentText );
+
+    ifCalculatedThanClearText( sBtnNineText, sInputText );
 }
 
 void Qcalculate::decideForOperatorPrint(const QString& sCurrentText, QString& sInputText, const QString& sBtnText)
@@ -541,7 +542,7 @@ void Qcalculate::on_btnEqual_clicked()
     	return;
     }
 
-    // = 연사자 계속 계산
+    // = 연산자 계속 계산
     if( sInputText.contains( "=" ) )
     {
         if( sInputText.contains( "+" ) == true )
@@ -646,6 +647,8 @@ void Qcalculate::on_btnSquare_clicked()
 void Qcalculate::on_btnSign_clicked()
 {
     double sCurrentText = ui.edtCalculated->text().toDouble();
+
+    QLineEdit* edt = ui.edtCalculated;
     
     if ( sCurrentText < 0 )
     {
@@ -831,7 +834,7 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
         );
 
         QHBoxLayout* frameLayout = new QHBoxLayout( frame );
-        QLabel* label = new QLabel( dataValue, frame );
+        QLabel* label = new QLabel( sTextFirst, frame );
         frameLayout->setContentsMargins( 10, 5, 10, 5 );
         label->setObjectName( "labelMemory" );
 
@@ -842,13 +845,16 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
         if( layout == nullptr )
         {
             layout = new QVBoxLayout( ui.scrollAreaWidgetContents_2 );
+            layout->setContentsMargins( 0, 0, 0, 0 );
+            layout->setSpacing( 2 );
         }
 
         QVBoxLayout* vLayout = qobject_cast< QVBoxLayout* >( layout );
         if( vLayout )
         {
-            vLayout->insertWidget( 0, frame );
+            vLayout->insertWidget( vLayout->count() - 1, frame );
         }
+
 
     }
 	else
@@ -892,6 +898,14 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
         {
             vLayout->insertWidget( 0, frame );
         }
+        
+        QVector<QPushButton*> buttons;
+
+        QPushButton* btnMC = new QPushButton( QString( "MC" ), frame );
+        QPushButton* btnMP = new QPushButton( QString( "M+" ), frame );
+        QPushButton* btnMM = new QPushButton( QString( "M-" ), frame );
+
+
 
 	}
     
