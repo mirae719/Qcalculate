@@ -447,7 +447,6 @@ void Qcalculate::on_btnEqual_clicked()
     isPageOne = true;
 	addDataFrame( isPageOne, sInputText + QString::number( *dResult, 'g', 16 ) );
 
-
 }
 
 void Qcalculate::on_btnClear_clicked()
@@ -489,7 +488,7 @@ void Qcalculate::on_btnSquare_clicked()
     double dResult = pow( dCurrent, 2 );
 
     ui.edtInput->setText( ( "sqr(" + sCurrentText + ")" ) );
-    ui.edtCalculated->setText( QString::number( dResult ) );
+    ui.edtCalculated->setText( QString::number( dResult, 'g', 16 ) );
 }
 
 void Qcalculate::on_btnSign_clicked()
@@ -498,11 +497,11 @@ void Qcalculate::on_btnSign_clicked()
     
     if ( sCurrentText < 0 )
     {
-        ui.edtCalculated->setText( QString::number( abs( sCurrentText ) ) );
+        ui.edtCalculated->setText( QString::number( abs( sCurrentText ), 'g', 16 ) );
     }
     else
     {
-		ui.edtCalculated->setText( QString::number( sCurrentText * -1 ) );
+		ui.edtCalculated->setText( QString::number( sCurrentText * -1, 'g', 16 ) );
     }
 }
 
@@ -511,15 +510,15 @@ void Qcalculate::on_btnDivideX_clicked()
     QString sCurrentText = ui.edtCalculated->text();
 
     ui.edtInput->setText( ( "1/"  "(" + sCurrentText + ")" ) );
-    ui.edtCalculated->setText( QString::number( 1 / sCurrentText.toDouble() ) );
+    ui.edtCalculated->setText( QString::number( 1 / sCurrentText.toDouble(), 'g', 16 ) );
 }
 
 void Qcalculate::on_btnRoot_clicked()
 {
-    QString sCurrentText = ui.edtInput->text();
+    QString sCurrentText = ui.edtCalculated->text();
 
-	ui.edtInput->setText( ( "sqrt(" + sCurrentText + ")" ) );
-    ui.edtCalculated->setText( QString::number( sqrt( sCurrentText.toDouble() ) ) );
+	ui.edtInput->setText( ( "√(" + sCurrentText + ")" ) );
+    ui.edtCalculated->setText( QString::number( sqrt( sCurrentText.toDouble() ), 'g', 16 ) );
 }
 
 void Qcalculate::on_btnPersent_clicked()
@@ -533,8 +532,8 @@ void Qcalculate::on_btnPersent_clicked()
 
         dResult = sInputText.toDouble() / sCurrentText.toDouble();
 
-        ui.edtInput->setText( sInputText + "+" + QString::number( dResult ) );
-        ui.edtCalculated->setText( QString::number( dResult ) );
+        ui.edtInput->setText( sInputText + "+" + QString::number( dResult, 'g', 16 ) );
+        ui.edtCalculated->setText( QString::number( dResult, 'g', 16 ) );
     }
     else if( sCurrentText.endsWith( "-" ) == true )
     {
@@ -542,8 +541,8 @@ void Qcalculate::on_btnPersent_clicked()
 
         dResult = sInputText.toDouble() / sCurrentText.toDouble();
 
-        ui.edtInput->setText( sInputText + "-" + QString::number( dResult ) );
-        ui.edtCalculated->setText( QString::number( dResult ) );
+        ui.edtInput->setText( sInputText + "-" + QString::number( dResult, 'g', 16 ) );
+        ui.edtCalculated->setText( QString::number( dResult, 'g', 16 ) );
     }
     else if ( sCurrentText.endsWith( "X" ) == true )
     {
@@ -551,8 +550,8 @@ void Qcalculate::on_btnPersent_clicked()
 
         dResult = sInputText.toDouble() / sCurrentText.toDouble();
 
-        ui.edtInput->setText( sInputText + "X" + QString::number( dResult ) );
-        ui.edtCalculated->setText( QString::number( dResult ) );
+        ui.edtInput->setText( sInputText + "X" + QString::number( dResult, 'g', 16 ) );
+        ui.edtCalculated->setText( QString::number( dResult, 'g', 16 ) );
 	}
     else
     {
@@ -560,8 +559,8 @@ void Qcalculate::on_btnPersent_clicked()
 
         dResult = sInputText.toDouble() / sCurrentText.toDouble();
 
-        ui.edtInput->setText( sInputText + "÷" + QString::number( dResult ) );
-        ui.edtCalculated->setText( QString::number( dResult ) );
+        ui.edtInput->setText( sInputText + "÷" + QString::number( dResult, 'g', 16 ) );
+        ui.edtCalculated->setText( QString::number( dResult, 'g', 16 ) );
     }
 
 }
@@ -583,7 +582,7 @@ void Qcalculate::on_btnMP_clicked()
     double dEndData = vecMemoryData.begin()->toDouble();
 	double dCurrentText = ui.edtCalculated->text().toDouble();
 
-    updateLayoutMemory(QString::number( dEndData + dCurrentText ));
+    updateLayoutMemory(QString::number( dEndData + dCurrentText, 'g', 16 ));
 }
 
 void Qcalculate::on_btnMM_clicked()
@@ -591,7 +590,7 @@ void Qcalculate::on_btnMM_clicked()
 	double dEndData = vecMemoryData.begin()->toDouble();
     double dCurrentText = ui.edtCalculated->text().toDouble();
 
-    updateLayoutMemory( QString::number( dEndData - dCurrentText ) );
+    updateLayoutMemory( QString::number( dEndData - dCurrentText, 'g', 16 ) );
 }
 
 void Qcalculate::on_btnMc_clicked()
@@ -602,7 +601,7 @@ void Qcalculate::on_btnMc_clicked()
 void Qcalculate::on_btnMr_clicked()
 {
     double dEndData = vecMemoryData.begin()->toDouble();
-    ui.edtInput->setText( QString::number( dEndData ) );
+    ui.edtInput->setText( QString::number( dEndData, 'g', 16 ) );
 }
 
 void Qcalculate::on_btnRegister_clicked()
