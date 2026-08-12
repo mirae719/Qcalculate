@@ -9,6 +9,8 @@ Qcalculate::Qcalculate(QWidget *parent)
     this->setWindowOpacity( 0.99 );
     ui.edtCalculated->setAlignment( Qt::AlignRight );
     ui.edtInput->setAlignment( Qt::AlignRight );
+
+
     
 }
 
@@ -208,7 +210,6 @@ void Qcalculate::insertComma( QString& sCurrentText )
         ui.edtCalculated->setText( sCurrentText );
     }
 
-
 }
 
 /*
@@ -307,12 +308,14 @@ void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
     }
 }
 
-void Qcalculate::ifCalculatedThanClearText(const QString& sBtnText, const QString& sInputText)
+void Qcalculate::ifCalculatedThanClearText( QString& sBtnText, const QString& sInputText)
 {
 	if( sInputText.isEmpty() == false && sInputText.endsWith( "=" ) )
 	{
 		ui.edtInput->clear();
         ui.edtCalculated->clear();
+
+        insertComma( sBtnText );
 		ui.edtCalculated->setText( sBtnText );
 	}
 }
@@ -410,10 +413,9 @@ void Qcalculate::on_btnSeven_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint( sBtnSevenText, sCurrentText );
-    insertComma( sCurrentText );
 
     ifCalculatedThanClearText( sBtnSevenText, sInputText );
-
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnAte_clicked()
@@ -594,7 +596,11 @@ void Qcalculate::on_btnEqual_clicked()
     // 포인터 -> 값이 들어가기도 하고, 주소가 들어가기도 함
 
     ui.edtInput->setText( sInputText += "=" );
+
     ui.edtCalculated->setText( QString::number( *dResult, 'g', 16 ) );
+
+    QString calcuText =  ui.edtCalculated->text();
+	insertComma( calcuText );
 
     // 기록 하기.
     isPageOne = true;
