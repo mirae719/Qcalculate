@@ -299,6 +299,7 @@ void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
         {
             ui.edtInput->setText( sInputText + sBtn );
             isOperator = false;
+            
         }
     }
     else
@@ -307,15 +308,17 @@ void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
     }
 }
 
-void Qcalculate::ifCalculatedThenClearText( const QString& sCurrentText, QString& sBtnText, const QString& sInputText)
+void Qcalculate::ifCalculatedThenClearText( QString& sCurrentText, QString& sBtnText, const QString& sInputText )
 {
-	if( sCurrentText.isEmpty() == false && sInputText.endsWith( "=" ) )
-	{
-		ui.edtInput->clear();
+    if( sCurrentText.isEmpty() == false && sInputText.endsWith( "=" ) )
+    {
+        ui.edtInput->clear();
         ui.edtCalculated->clear();
 
-		ui.edtCalculated->setText( sBtnText );
-	}
+        ui.edtCalculated->setText( sBtnText );
+        isOperator = false;
+    }
+
 }
 
 void Qcalculate::on_btnZero_clicked()
@@ -325,10 +328,9 @@ void Qcalculate::on_btnZero_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint(sBtnZeroText, sCurrentText);
+	ifCalculatedThenClearText(sCurrentText, sBtnZeroText, sInputText);
     insertComma( sCurrentText );
 	
-	ifCalculatedThenClearText(sCurrentText, sBtnZeroText, sInputText);
-
 }
 
 void Qcalculate::on_btnOne_clicked()
@@ -338,9 +340,9 @@ void Qcalculate::on_btnOne_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint( sBtnOneText, sCurrentText );
-    insertComma( sCurrentText );
-
     ifCalculatedThenClearText( sCurrentText, sBtnOneText, sInputText );
+	insertComma( sCurrentText );
+
 }
     
 
@@ -351,9 +353,9 @@ void Qcalculate::on_btnTwo_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint( sBtnTwoText, sCurrentText );
+    ifCalculatedThenClearText( sCurrentText, sBtnTwoText, sInputText );
     insertComma( sCurrentText );
 
-    ifCalculatedThenClearText( sCurrentText, sBtnTwoText, sInputText );
 }
 
 void Qcalculate::on_btnThree_clicked()
@@ -363,9 +365,9 @@ void Qcalculate::on_btnThree_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint( sBtnThreeText, sCurrentText );
+    ifCalculatedThenClearText( sCurrentText, sBtnThreeText, sInputText );
     insertComma( sCurrentText );
 
-    ifCalculatedThenClearText( sCurrentText, sBtnThreeText, sInputText );
 }
 
 void Qcalculate::on_btnFour_clicked()
@@ -375,9 +377,9 @@ void Qcalculate::on_btnFour_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint( sBtnFourText, sCurrentText );
+    ifCalculatedThenClearText( sCurrentText, sBtnFourText, sInputText );
     insertComma( sCurrentText );
 
-    ifCalculatedThenClearText( sCurrentText, sBtnFourText, sInputText );
 }
 
 void Qcalculate::on_btnFive_clicked()
@@ -387,9 +389,9 @@ void Qcalculate::on_btnFive_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint( sBtnFiveText, sCurrentText );
+    ifCalculatedThenClearText( sCurrentText, sBtnFiveText, sInputText );
 	insertComma( sCurrentText );
 
-    ifCalculatedThenClearText( sCurrentText, sBtnFiveText, sInputText );
 }
 
 void Qcalculate::on_btnSix_clicked()
@@ -399,9 +401,9 @@ void Qcalculate::on_btnSix_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint( sBtnSixText, sCurrentText );
+    ifCalculatedThenClearText( sCurrentText, sBtnSixText, sInputText );
     insertComma( sCurrentText );
 
-    ifCalculatedThenClearText( sCurrentText, sBtnSixText, sInputText );
 }
 
 void Qcalculate::on_btnSeven_clicked()
@@ -423,8 +425,8 @@ void Qcalculate::on_btnAte_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint( sBtnAteText, sCurrentText );
-    insertComma( sCurrentText );
     ifCalculatedThenClearText( sCurrentText, sBtnAteText, sInputText );
+    insertComma( sCurrentText );
 }
 
 void Qcalculate::on_btnNine_clicked()
@@ -434,12 +436,12 @@ void Qcalculate::on_btnNine_clicked()
     QString sInputText = ui.edtInput->text();
 
     decidePrint( sBtnNineText, sCurrentText );
+    ifCalculatedThenClearText( sCurrentText, sBtnNineText, sInputText );
     insertComma( sCurrentText );
 
-    ifCalculatedThenClearText( sCurrentText, sBtnNineText, sInputText );
 }
 
-void Qcalculate::decideForOperatorPrint(const QString& sCurrentText, QString& sInputText, const QString& sBtnText)
+void Qcalculate::decideForOperatorPrint( QString& sCurrentText, QString& sInputText, const QString& sBtnText)
 {
 
 	if( sCurrentText.isEmpty() == true )
@@ -447,19 +449,28 @@ void Qcalculate::decideForOperatorPrint(const QString& sCurrentText, QString& sI
         return;
 	}
 
-	if( sInputText.endsWith( "+" ) == true ||
+    // 다른 연사자가 있을때, 연사자 교체
+    if(
+    	sInputText.endsWith( "+" ) == true ||
 		sInputText.endsWith( "-" ) == true ||
 		sInputText.endsWith( "*" ) == true ||
 		sInputText.endsWith( "/" ) == true )
 	{
 		sInputText.chop(1);
 		ui.edtInput->setText( sInputText + sBtnText );
+
 	}
 
-    if( sInputText.endsWith( "=" ) )
+    /*
+    else
     {
-	    
+        ui.edtCalculated->clear();
+
+        sCurrentText.clear();
+        ui.edtCalculated->setText( sCurrentText += sBtnText );
+        isChange = false;
     }
+    */
 
 	ui.edtInput->setText( sCurrentText + sBtnText );
 }
@@ -520,6 +531,8 @@ void Qcalculate::on_btnMinus_clicked()
 
 void Qcalculate::on_btnEqual_clicked()
 {
+    isOperator = false;
+
     QString sInputText = ui.edtInput->text();
     QString sCurrentText = ui.edtCalculated->text();
     sCurrentText.remove( "," );

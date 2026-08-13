@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1080</width>
-    <height>769</height>
+    <width>1082</width>
+    <height>658</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -1587,8 +1587,6 @@ color:rgb(0, 0, 0);</string>
                 </size>
                </property>
               </widget>
-              <zorder>pushButton_2</zorder>
-              <zorder>pushButton_2</zorder>
              </widget>
             </widget>
            </widget>

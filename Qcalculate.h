@@ -18,8 +18,8 @@ public:
     double* calculated( const QString& sInputText );
     void insertComma(QString& sCurrentText);
     void decidePrint(const QString& sBtnText, QString& sCurrentText);
-    void ifCalculatedThenClearText( const QString& sCurrentText, QString& sBtnText, const QString& sInputText);
-    void decideForOperatorPrint( const QString& sCurrentText, QString& sInputText, const QString& sBtnText );
+    void ifCalculatedThenClearText( QString& sCurrentText, QString& sBtnText, const QString& sInputText);
+    void decideForOperatorPrint( QString& sCurrentText, QString& sInputText, const QString& sBtnText );
     void removeComma(QString& sCurrentText);
 
 public slots:
@@ -68,5 +68,5 @@ private:
     bool isOperator = false;
     bool isRemove = false;
     bool isPageOne;
-    bool isCreateComma;
+    bool isChange = false;
 };
