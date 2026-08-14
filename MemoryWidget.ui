@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>test</class>
- <widget class="QWidget" name="test">
+ <class>widget</class>
+ <widget class="QWidget" name="widget">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>408</width>
-    <height>256</height>
+    <width>418</width>
+    <height>258</height>
    </rect>
   </property>
   <property name="sizePolicy">

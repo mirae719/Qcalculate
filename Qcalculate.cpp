@@ -3,6 +3,7 @@
 #include <valarray>
 
 #include "HoverButton.h"
+#include "MemoryWidget.h"
 
 Qcalculate::Qcalculate(QWidget *parent)
     : QMainWindow(parent)
@@ -880,13 +881,23 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
             vLayout->insertWidget( vLayout->count() - 1, frame );
         }
 
-
     }
-	else
-	{
-        /*
+    else
+    {
+        
         ui.edtInfo2->hide();
 
+        QWidget* widgetContents = ui.scrollAreaWidgetContents;
+
+        QFrame* frame = new QFrame( widgetContents );
+
+        QVBoxLayout* v_layout = new QVBoxLayout( frame );
+
+        MemoryWidget* mWidget = new MemoryWidget( frame, dataValue );
+        v_layout->addWidget( mWidget );
+
+        /*
+        QWidget* =.scrollAreaWidgetContents;
         QFrame* frame = new QFrame();
         frame->setAttribute( Qt::WA_StyledBackground, true );
         frame->setStyleSheet(
@@ -905,9 +916,21 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
             "}"
         );
 
-        QHBoxLayout* frameLayout = new QHBoxLayout( frame );
-        QLabel* label = new QLabel( dataValue, frame );
-        frameLayout->setContentsMargins( 10, 5, 10, 5 );
+        frame->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
+
+        QFrame* frame2 = new QFrame( frame );
+        QFrame* frame3 = new QFrame( frame );
+
+        QVBoxLayout* v_layout1 = new QVBoxLayout( frame );
+
+        v_layout1->addWidget( frame2 );
+        v_layout1->addWidget( frame3 );
+
+        QHBoxLayout* h_layout1 = new QHBoxLayout( frame2 );
+
+        QLabel* label = new QLabel( dataValue, frame2 );
+
+        v_layout1->setContentsMargins( 10, 5, 10, 5);
         label->setObjectName( "labelMemory" );
 
         frameLayout->addStretch();
@@ -924,9 +947,11 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
         {
             vLayout->insertWidget( 0, frame );
         }
-        
+
         QVector<QPushButton*> buttons;
-		*/
+        ///////////////////////
+
+
         QWidget* widgetContents = ui.scrollAreaWidgetContents;
 
         QFrame* mainFrame = new QFrame( widgetContents );
@@ -988,11 +1013,12 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
         h_layout2->addWidget( hBtnMC );
         h_layout2->addWidget( hBtnMP );
         h_layout2->addWidget( hBtnMM );
-
-	}
-    
+	
+	*/
+    }
     
 }
+
 
 void Qcalculate::updateLayoutMemory( const QString& dataValue )
 {

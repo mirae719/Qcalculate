@@ -1,13 +1,10 @@
-#include "test.h"
-
+#include "MemoryWidget.h"
 #include <QVBoxLayout>
 #include <QLineEdit>
-#include <QPushButton>
-
 #include "HoverButton.h"
 
-test::test(QWidget *parent)
-	: QMainWindow(parent)
+MemoryWidget::MemoryWidget(QWidget *parent, const QString& data)
+	: QMainWindow(parent), dataValue(data)
 {
 	ui.setupUi(this);
 
@@ -40,7 +37,7 @@ test::test(QWidget *parent)
 	frame2->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 	frame3->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 
-	QLineEdit* edtTextBox = new QLineEdit( frame2 );
+	QLineEdit* edtTextBox = new QLineEdit( data, frame2 );
 
 	edtTextBox->setStyleSheet( "border: none;"
 								"font: 15pt '맑은 고딕';" );
@@ -73,6 +70,5 @@ test::test(QWidget *parent)
 
 }
 
-
-test::~test()
+MemoryWidget::~MemoryWidget()
 {}
