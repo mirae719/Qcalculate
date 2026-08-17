@@ -1,9 +1,9 @@
-#pragma once
+﻿#pragma once
 
 #include <ui_MemoryWidget.h>
-#include <QMainWindow>
+#include <QWidget>
 
-class MemoryWidget : public QMainWindow
+class MemoryWidget : public QWidget
 {
 	Q_OBJECT
 

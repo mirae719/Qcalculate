@@ -1401,7 +1401,7 @@ QPushButton:focus {
 backgroud-color:rgb(249, 249, 249);</string>
           </property>
           <property name="currentIndex">
-           <number>1</number>
+           <number>0</number>
           </property>
           <widget class="QWidget" name="page">
            <widget class="QLineEdit" name="edtInfo">

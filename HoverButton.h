@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include <QPushButton>
 
 class HoverButton : public QPushButton
@@ -6,7 +6,7 @@ class HoverButton : public QPushButton
 	Q_OBJECT
 
 protected:
-	void enterEvent( QEvent* event ) override;
+	void enterEvent( QEvent* event );
 	bool eventFilter( QObject* watched, QEvent* event ) override;
 
 public:

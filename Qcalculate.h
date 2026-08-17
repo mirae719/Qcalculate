@@ -1,10 +1,8 @@
-#pragma once
+﻿#pragma once
 
 #include <QtWidgets/QMainWindow>
 #include "ui_Qcalculate.h"
-#include <QFrame>
 #include <QLabel>
-#include <QVBoxLayout>
 
 
 class Qcalculate : public QMainWindow

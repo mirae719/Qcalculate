@@ -1,4 +1,4 @@
-#include "HoverButton.h"
+﻿#include "HoverButton.h"
 
 #include <qcoreevent.h>
 
@@ -23,10 +23,16 @@ HoverButton::~HoverButton()
 {
 }
 
+/*
 void HoverButton::enterEvent( QEvent* event )
 {
 	QPushButton::enterEvent( event );
 	wTarget->show();
+} 
+*/
+
+void HoverButton::enterEvent(QEvent* event)
+{
 }
 
 bool HoverButton::eventFilter(QObject* target, QEvent* event)

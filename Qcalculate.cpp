@@ -1,4 +1,4 @@
-#include "Qcalculate.h"
+﻿#include "Qcalculate.h"
 
 #include <valarray>
 
@@ -889,132 +889,29 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
 
         QWidget* widgetContents = ui.scrollAreaWidgetContents;
 
-        QFrame* frame = new QFrame( widgetContents );
+		MemoryWidget* memoryWidget = new MemoryWidget(widgetContents, dataValue);
+        memoryWidget->setFixedHeight(70);
+		memoryWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-        QVBoxLayout* v_layout = new QVBoxLayout( frame );
+        QLayout* layout = widgetContents->layout();
 
-        MemoryWidget* mWidget = new MemoryWidget( frame, dataValue );
-        v_layout->addWidget( mWidget );
-
-        /*
-        QWidget* =.scrollAreaWidgetContents;
-        QFrame* frame = new QFrame();
-        frame->setAttribute( Qt::WA_StyledBackground, true );
-        frame->setStyleSheet(
-            "QFrame{ "
-            "   border: none;"
-            "   margin-left: auto;"
-            "   font-family: '맑은 고딕';"
-            "   font-size: 17pt;"
-            "   font-weight: bold;"
-            "}"
-            "QFrame:hover{"
-            "   background-color:rgb(234, 234, 234);"
-            "}"
-            "QLabel:hover{"
-            "   background-color:rgb(234, 234, 234);"
-            "}"
-        );
-
-        frame->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-
-        QFrame* frame2 = new QFrame( frame );
-        QFrame* frame3 = new QFrame( frame );
-
-        QVBoxLayout* v_layout1 = new QVBoxLayout( frame );
-
-        v_layout1->addWidget( frame2 );
-        v_layout1->addWidget( frame3 );
-
-        QHBoxLayout* h_layout1 = new QHBoxLayout( frame2 );
-
-        QLabel* label = new QLabel( dataValue, frame2 );
-
-        v_layout1->setContentsMargins( 10, 5, 10, 5);
-        label->setObjectName( "labelMemory" );
-
-        frameLayout->addStretch();
-        frameLayout->addWidget( label );
-
-        QLayout* layout = ui.scrollAreaWidgetContents->layout();
-        if( layout == nullptr )
+        if (layout == nullptr)
         {
-            layout = new QVBoxLayout( ui.scrollAreaWidgetContents );
+			layout = new QVBoxLayout(widgetContents);
+			layout->setContentsMargins(0, 0, 0, 0);
+			layout->setSpacing(0);
         }
 
-        QVBoxLayout* vLayout = qobject_cast< QVBoxLayout* >( layout );
-        if( vLayout )
+		QVBoxLayout* vLayout = qobject_cast<QVBoxLayout*>(layout);
+
+        if (vLayout)
         {
-            vLayout->insertWidget( 0, frame );
+            vLayout->insertWidget(0, memoryWidget);
+			
         }
 
-        QVector<QPushButton*> buttons;
-        ///////////////////////
+        vLayout->addStretch();
 
-
-        QWidget* widgetContents = ui.scrollAreaWidgetContents;
-
-        QFrame* mainFrame = new QFrame( widgetContents );
-        mainFrame->setStyleSheet( "QFrame:hover{"
-                                  "background-color: #eaeaea;"
-                                  "}"
-                                  "QFrame {"
-                                  "background-color: #eff5f4;"
-                                  "}" );
-
-        mainFrame->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-
-        QVBoxLayout* v_layout = new QVBoxLayout( mainFrame );
-
-        QFrame* frame2 = new QFrame( mainFrame );
-        QFrame* frame3 = new QFrame( mainFrame );
-
-        v_layout->addWidget( frame2 );
-        v_layout->addWidget( frame3 );
-
-        v_layout->setContentsMargins( 0, 0, 0, 0 );
-        v_layout->setSpacing( 0 );
-
-        frame2->setStyleSheet(
-            "background-color: transparent;" );
-        frame3->setStyleSheet(
-            "background-color: transparent;" );
-
-        frame2->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-        frame3->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-
-        QLineEdit* edtTextBox = new QLineEdit( frame2 );
-
-        edtTextBox->setStyleSheet( "border: none;"
-                                   "font: 15pt '맑은 고딕';" );
-        edtTextBox->setEnabled( false );
-
-        QSpacerItem* leftSpacer1 = new QSpacerItem( 300, 30, QSizePolicy::Expanding, QSizePolicy::Minimum );
-        QSpacerItem* leftSpacer2 = new QSpacerItem( 300, 30, QSizePolicy::Expanding, QSizePolicy::Minimum );
-
-        QHBoxLayout* h_layout = new QHBoxLayout( frame2 );
-        h_layout->setContentsMargins( 0, 0, 0, 0 );
-        h_layout->addItem( leftSpacer1 );
-        h_layout->addWidget( edtTextBox );
-
-        QHBoxLayout* h_layout2 = new QHBoxLayout( frame3 );
-
-        HoverButton* hBtnMC = new HoverButton( mainFrame, this );
-        hBtnMC->setText( "MC" );
-
-        HoverButton* hBtnMP = new HoverButton( mainFrame, this );
-        hBtnMP->setText( "M+" );
-
-        HoverButton* hBtnMM = new HoverButton( mainFrame, this );
-        hBtnMM->setText( "M-" );
-
-        h_layout2->setContentsMargins( 0, 0, 0, 0 );
-        h_layout2->addItem( leftSpacer2 );
-        h_layout2->addWidget( hBtnMC );
-        h_layout2->addWidget( hBtnMP );
-        h_layout2->addWidget( hBtnMM );
-	
-	*/
     }
     
 }
