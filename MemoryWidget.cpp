@@ -101,6 +101,13 @@ MemoryWidget::MemoryWidget(QWidget *parent, const QString& data)
 							" background-color: #f2f2f2;"
 							"}");
 
+	hBtnMC->setVisible(true);
+	hBtnMC->setEnabled(true);
+	hBtnMP->setVisible(true);
+	hBtnMP->setEnabled(true);
+	hBtnMM->setVisible(true);
+	hBtnMM->setEnabled(true);
+
 	h_layout2->setContentsMargins( 0, 0, 0, 0 );
 	h_layout2->addItem( leftSpacer2 );
 	h_layout2->addWidget( hBtnMC );

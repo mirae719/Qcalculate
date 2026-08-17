@@ -4,6 +4,7 @@
 
 #include "HoverButton.h"
 #include "MemoryWidget.h"
+#include "RegisterWidget.h"
 
 Qcalculate::Qcalculate(QWidget *parent)
     : QMainWindow(parent)
@@ -88,96 +89,6 @@ double* Qcalculate::calculated( const QString& sInputText )
     }
 }
 
-/*
-void Qcalculate::insertComma( QString& sCurrentText )
-{
-    QMap<int, QString> mapCommaPos;
-    int nCommaCount = 0;
-
-    if( sCurrentText.count() >= 4 )
-    {
-        // 쉼표가 있는 인덱스 위치를 map에 저장. (key)
-	    for (int idx = 0; idx < sCurrentText.count(); idx++)
-	    {
-            if( sCurrentText.at( idx ) == "," )
-            {
-                mapCommaPos.insert( idx, "," );
-                nCommaCount++;
-            }
-	    }
-
-        int nMustExistCommaCount = ( sCurrentText.count() - nCommaCount ) / 3; // 있어야 할 쉼표 갯수
-
-        if( nCommaCount == nMustExistCommaCount )
-        {
-            return; // 쉼표를 다 채웠을 경우 return;
-        }
-
-        for( int idx = sCurrentText.count()-3; idx < sCurrentText.count(); idx-=3 )
-        {
-            for( int idx2 = 0; idx2 < mapCommaPos.count(); idx2++ )
-            {
-                if( sCurrentText.at( idx ) == mapCommaPos.value( idx2 ) )
-                {
-                    continue;
-                }
-
-            }
-
-			sCurrentText.insert( idx, "," );
-        }
-
-        ui.edtCalculated->setText( sCurrentText );
-
-    }
-}
-*/
-
-/*
-void Qcalculate::insertComma( QString& sCurrentText )
-{
-    QMap<int, QMap<int, QString>> mapComma; // key: 몇번째 콤마, value: 콤마 위치 변경 map
-    QMap<int, QString> mapCommaPos;
-	int nCommaCount = 0;
-    int nMoveCount = 3;
-
-    if( sCurrentText.count() >= 4 )
-    {
-        if( isCreateComma == false )
-        {
-            sCurrentText.insert( 1, "," );
-            ui.edtCalculated->setText( sCurrentText );
-            nCommaCount++;
-        	isCreateComma = true;
-
-            for( int idx = 0; idx < nCommaCount; idx++ )
-            {
-                if( mapCommaPos.value( idx ) == sCurrentText.at( idx ) )
-                {
-                    continue;
-                }
-
-                mapCommaPos.insert( 1, "," ); // 콤마 위치 변경 map
-                mapComma.insert( idx, mapCommaPos ); // 콤마 순서 map
-            }
-        }
-        else
-        {
-            for( int idx = 0; idx < mapComma.count(); idx++ )
-            {
-                if( nMoveCount == 0 )
-                {
-                    break;
-                }
-
-                mapComma.value( idx );
-                nMoveCount--;
-            }
-        }
-	    
-    }
-}
-*/
 
 void Qcalculate::insertComma( QString& sCurrentText )
 {
@@ -215,66 +126,6 @@ void Qcalculate::insertComma( QString& sCurrentText )
     }
 
 }
-
-/*
-void Qcalculate::insertComma( QString& sCurrentText )
-{
-	// 중간에 ' , ' 넣기
-	QVector<QString> vecText;
-	QMap<int, QString> mapCommaPos;
-	int nCommaCount = 0;
-
-    sCurrentText += "";
-
-	// 문자열이 4개 이상이며, 콤마가 nCommaCount 갯수에 맞게 들어있다면 return;
-	if( sCurrentText.count() >= 4 )
-	{
-		QString sCommaText = ",";
-    	
-		for( int idx = 0; idx < sCurrentText.count(); idx++ )
-		{
-			vecText.append( sCurrentText.at( idx ) );
-
-			if( vecText.at( idx ) == sCommaText )
-			{
-				nCommaCount++;
-				mapCommaPos.insert( idx, sCommaText );
-			}
-		}
-
-		int nTextCount = vecText.count() - nCommaCount; // 현재 출력된 문자열에서 콤마만 뺀 갯수;
-		int nMustExistCommaCount = nTextCount / 3; // 반드시 있어야 할 콤마 갯수
-		QList<int> liCommaIdx = mapCommaPos.keys();  // comma 위치가 들어있는 인덱스 추출;
-
-		for( auto it = vecText.end() - 3; it != vecText.begin(); it -= 3 )
-		{
-
-			if( nCommaCount == nMustExistCommaCount )
-			{
-				break;
-			}
-
-			// vec에 ,가 들어있는 위치에 ,가 있는지 확인하고 맞으면 skip;
-			for( int idx = 0; 0 < liCommaIdx.count(); idx++ )
-				if( vecText.at( liCommaIdx.at( idx ) ) == sCommaText )
-				{
-					continue;
-				}
-
-			vecText.insert( it, sCommaText );
-			nCommaCount++;
-		}
-
-		QString sOutputText;
-		for( auto it = vecText.begin(); it != vecText.end(); ++it )
-		{
-			sOutputText += it;
-			ui.edtCalculated->setText( sOutputText );
-		}
-
-	}
-}
-*/
 
 void Qcalculate::decidePrint( const QString& sBtn, QString& sCurrentText )
 {
@@ -465,17 +316,6 @@ void Qcalculate::decideForOperatorPrint( QString& sCurrentText, QString& sInputT
 		ui.edtInput->setText( sInputText + sBtnText );
 
 	}
-
-    /*
-    else
-    {
-        ui.edtCalculated->clear();
-
-        sCurrentText.clear();
-        ui.edtCalculated->setText( sCurrentText += sBtnText );
-        isChange = false;
-    }
-    */
 
 	ui.edtInput->setText( sCurrentText + sBtnText );
 }
@@ -824,7 +664,6 @@ void Qcalculate::on_btnRegisterClear_clicked()
         return;
     }
 
-    vecRegisterData.clear();
     deleteLayoutRegister();
 }
 
@@ -835,51 +674,33 @@ void Qcalculate::addDataFrame(const bool& isPageOne, const QString& dataValue )
         ui.edtInfo->hide();
 
         QStringList sLiText = dataValue.split("=");
-        QString sTextFirst = sLiText.at( 0 );
-        QString sTextSecond = sLiText.at( 1 );
+        const QString& sTextFirst = sLiText.at( 0 ) + '=';
+        const QString& sTextSecond = sLiText.at( 1 );
 
-        vecRegisterData.append( sTextFirst );
-        vecRegisterData.append( sTextSecond );
+        QWidget* widgetContents = ui.scrollAreaWidgetContents_2;
 
-        QFrame* frame = new QFrame();
-        frame->setAttribute( Qt::WA_StyledBackground, true );
-        frame->setStyleSheet(
-            "QFrame{ "
-            "   border: none;"
-            "   margin-left: auto;"
-            "   font-family: '맑은 고딕';"
-            "   font-size: 17pt;"
-            "   font-weight: bold;"
-            "}"
-            "QFrame:hover{"
-            "   background-color:rgb(234, 234, 234);"
-            "}"
-            "QLabel:hover{"
-            "   background-color:rgb(234, 234, 234);"
-            "}"
-        );
+		RegisterWidget* registerWidget = new RegisterWidget(widgetContents, sTextFirst, sTextSecond);
+        registerWidget->setFixedHeight(70);
+        registerWidget->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-        QHBoxLayout* frameLayout = new QHBoxLayout( frame );
-        QLabel* label = new QLabel( sTextFirst, frame );
-        frameLayout->setContentsMargins( 10, 5, 10, 5 );
-        label->setObjectName( "labelMemory" );
+        QLayout* layout = widgetContents->layout();
 
-        frameLayout->addStretch();
-        frameLayout->addWidget( label );
-
-        QLayout* layout = ui.scrollAreaWidgetContents_2->layout();
-        if( layout == nullptr )
+        if (layout == nullptr)
         {
-            layout = new QVBoxLayout( ui.scrollAreaWidgetContents_2 );
-            layout->setContentsMargins( 0, 0, 0, 0 );
-            layout->setSpacing( 2 );
+            layout = new QVBoxLayout(widgetContents);
+            layout->setContentsMargins(0, 0, 0, 0);
+            layout->setSpacing(0);
         }
 
-        QVBoxLayout* vLayout = qobject_cast< QVBoxLayout* >( layout );
-        if( vLayout )
+        QVBoxLayout* vLayout = qobject_cast<QVBoxLayout*>(layout);
+
+        if (vLayout)
         {
-            vLayout->insertWidget( vLayout->count() - 1, frame );
+            vLayout->insertWidget(0, registerWidget);
+
         }
+
+        vLayout->addStretch();
 
     }
     else
