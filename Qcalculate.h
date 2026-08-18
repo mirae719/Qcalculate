@@ -10,10 +10,12 @@ class Qcalculate : public QMainWindow
     Q_OBJECT
 
 public:
+
+public:
     Qcalculate(QWidget *parent = nullptr);
     ~Qcalculate();
 
-    double* calculated( const QString& sInputText );
+    double calculated( const QString& sInputText );
     void insertComma(QString& sCurrentText, const QString& sInputText );
     void decidePrint(const QString& sBtnText, QString& sCurrentText);
     void ifCalculatedThenClearText( QString& sCurrentText, QString& sBtnText, const QString& sInputText);
@@ -61,6 +63,7 @@ public slots:
 
 private:
     Ui::QcalculateClass ui;
+    double dResult;
     QVector<QString> vecMemoryData;
     QVector<QString> vecRegisterData;
     bool isOperator = false;

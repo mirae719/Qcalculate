@@ -25,9 +25,7 @@ Qcalculate::~Qcalculate()
 // 연산자 계산
 // const QString& 으로 매개변수로 받는 것과, QString* 으로 받는 것의 차이. 
 
-double dResult;
-
-double* Qcalculate::calculated( const QString& sInputText )
+double Qcalculate::calculated( const QString& sInputText )
 {
     // 스택변수 -> 자기 라이프 사이클이 끝나면 사라짐
     
@@ -43,7 +41,7 @@ double* Qcalculate::calculated( const QString& sInputText )
 
             dResult = dInputFront + dInputBack;
 
-            return &dResult;
+            return dResult;
         }
     }
     else if( sInputText.contains("-") )
@@ -57,7 +55,7 @@ double* Qcalculate::calculated( const QString& sInputText )
 
             dResult = dInputFront - dInputBack;
 
-            return &dResult;
+            return dResult;
         }
 	}
     else if( sInputText.contains( "X" ) )
@@ -71,7 +69,7 @@ double* Qcalculate::calculated( const QString& sInputText )
 
             dResult = dInputFront * dInputBack;
 
-            return &dResult;
+            return dResult;
         }
     }
     else
@@ -84,7 +82,7 @@ double* Qcalculate::calculated( const QString& sInputText )
             double dInputBack = lstInput.at( 1 ).toDouble();
 
             dResult = dInputFront / dInputBack;
-            return &dResult;
+            return dResult;
         }
     }
 }
@@ -456,20 +454,20 @@ void Qcalculate::on_btnEqual_clicked()
         }
     }
 
-    double* dResult = calculated( sInputText += sCurrentText );
+    dResult = calculated( sInputText += sCurrentText );
 
     // 포인터 -> 값이 들어가기도 하고, 주소가 들어가기도 함
 
     ui.edtInput->setText( sInputText += "=" );
 
-    ui.edtCalculated->setText( QString::number( *dResult, 'g', 16 ) );
+    ui.edtCalculated->setText( QString::number( dResult, 'g', 16 ) );
 
     QString calcuText =  ui.edtCalculated->text();
 	insertComma( calcuText, sInputText );
 
     // 기록 하기.
     isPageOne = true;
-	addDataFrame( isPageOne, sInputText + QString::number( *dResult, 'g', 16 ) );
+	addDataFrame( isPageOne, sInputText + QString::number( dResult, 'g', 16 ) );
 
 }
 
