@@ -13,7 +13,7 @@ MemoryWidget::MemoryWidget(QWidget *parent, const QString& data)
 								"background-color: #eaeaea;"
 								"}" 
 								"QFrame {"
-								"background-color: #eff5f4;"
+								"background-color: #f3f3f3;"
 								"color: #191919;"
 								"}" );
 
