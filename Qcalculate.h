@@ -14,7 +14,7 @@ public:
     ~Qcalculate();
 
     double* calculated( const QString& sInputText );
-    void insertComma(QString& sCurrentText);
+    void insertComma(QString& sCurrentText, const QString& sInputText );
     void decidePrint(const QString& sBtnText, QString& sCurrentText);
     void ifCalculatedThenClearText( QString& sCurrentText, QString& sBtnText, const QString& sInputText);
     void decideForOperatorPrint( QString& sCurrentText, QString& sInputText, const QString& sBtnText );

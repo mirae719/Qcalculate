@@ -90,8 +90,13 @@ double* Qcalculate::calculated( const QString& sInputText )
 }
 
 
-void Qcalculate::insertComma( QString& sCurrentText )
+void Qcalculate::insertComma( QString& sCurrentText, const QString& sInputText )
 {
+    if( sInputText.endsWith( "=" ) )
+    {
+        return;
+    }
+
     QString sPureText = sCurrentText;
     sPureText.remove( "," );
 
@@ -185,7 +190,7 @@ void Qcalculate::on_btnZero_clicked()
 
     decidePrint(sBtnZeroText, sCurrentText);
 	ifCalculatedThenClearText(sCurrentText, sBtnZeroText, sInputText);
-    insertComma( sCurrentText );
+    insertComma( sCurrentText, sInputText );
 	
 }
 
@@ -197,7 +202,7 @@ void Qcalculate::on_btnOne_clicked()
 
     decidePrint( sBtnOneText, sCurrentText );
     ifCalculatedThenClearText( sCurrentText, sBtnOneText, sInputText );
-	insertComma( sCurrentText );
+	insertComma( sCurrentText, sInputText );
 
 }
     
@@ -210,7 +215,7 @@ void Qcalculate::on_btnTwo_clicked()
 
     decidePrint( sBtnTwoText, sCurrentText );
     ifCalculatedThenClearText( sCurrentText, sBtnTwoText, sInputText );
-    insertComma( sCurrentText );
+    insertComma( sCurrentText, sInputText );
 
 }
 
@@ -222,7 +227,7 @@ void Qcalculate::on_btnThree_clicked()
 
     decidePrint( sBtnThreeText, sCurrentText );
     ifCalculatedThenClearText( sCurrentText, sBtnThreeText, sInputText );
-    insertComma( sCurrentText );
+    insertComma( sCurrentText, sInputText );
 
 }
 
@@ -234,7 +239,7 @@ void Qcalculate::on_btnFour_clicked()
 
     decidePrint( sBtnFourText, sCurrentText );
     ifCalculatedThenClearText( sCurrentText, sBtnFourText, sInputText );
-    insertComma( sCurrentText );
+    insertComma( sCurrentText, sInputText );
 
 }
 
@@ -246,7 +251,7 @@ void Qcalculate::on_btnFive_clicked()
 
     decidePrint( sBtnFiveText, sCurrentText );
     ifCalculatedThenClearText( sCurrentText, sBtnFiveText, sInputText );
-	insertComma( sCurrentText );
+	insertComma( sCurrentText, sInputText );
 
 }
 
@@ -258,7 +263,7 @@ void Qcalculate::on_btnSix_clicked()
 
     decidePrint( sBtnSixText, sCurrentText );
     ifCalculatedThenClearText( sCurrentText, sBtnSixText, sInputText );
-    insertComma( sCurrentText );
+    insertComma( sCurrentText, sInputText );
 
 }
 
@@ -271,7 +276,7 @@ void Qcalculate::on_btnSeven_clicked()
     decidePrint( sBtnSevenText, sCurrentText );
 
     ifCalculatedThenClearText( sCurrentText, sBtnSevenText, sInputText );
-    insertComma( sCurrentText );
+    insertComma( sCurrentText, sInputText );
 }
 
 void Qcalculate::on_btnAte_clicked()
@@ -282,7 +287,7 @@ void Qcalculate::on_btnAte_clicked()
 
     decidePrint( sBtnAteText, sCurrentText );
     ifCalculatedThenClearText( sCurrentText, sBtnAteText, sInputText );
-    insertComma( sCurrentText );
+    insertComma( sCurrentText, sInputText );
 }
 
 void Qcalculate::on_btnNine_clicked()
@@ -293,7 +298,7 @@ void Qcalculate::on_btnNine_clicked()
 
     decidePrint( sBtnNineText, sCurrentText );
     ifCalculatedThenClearText( sCurrentText, sBtnNineText, sInputText );
-    insertComma( sCurrentText );
+    insertComma( sCurrentText, sInputText );
 
 }
 
@@ -460,7 +465,7 @@ void Qcalculate::on_btnEqual_clicked()
     ui.edtCalculated->setText( QString::number( *dResult, 'g', 16 ) );
 
     QString calcuText =  ui.edtCalculated->text();
-	insertComma( calcuText );
+	insertComma( calcuText, sInputText );
 
     // 기록 하기.
     isPageOne = true;
